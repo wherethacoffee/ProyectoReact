@@ -1,6 +1,5 @@
 import RegistroTickets from "./components/FormularioTickets";
 
-
 function App() {
   return (
     <div className="App">

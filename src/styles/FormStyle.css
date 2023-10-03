@@ -50,6 +50,13 @@ button {
     cursor: pointer;
 }
 
+span {
+    font-size: large;
+    display: block;
+    color: tomato;
+    font-size: x-small;
+}
+
 @media screen and (max-width: 600px) {
     .split-input {
         grid-template-columns: 1fr;

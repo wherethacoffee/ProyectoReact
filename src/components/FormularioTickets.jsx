@@ -1,163 +1,242 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import '../styles/FormStyle.css';
 
 const RegistroTickets = () => {
-    // Define estados para los campos del formulario
-    const [nombre_realiza_tramite, setNombreRealizaTramite] = useState('');
-    const [curp, setCurp] = useState('');
-    const [nombre, setNombre] = useState('');
-    const [paterno, setPaterno] = useState('');
-    const [materno, setMaterno] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [celular, setCelular] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [nivel, setNivel] = useState('Seleccionar');
-    const [municipio, setMunicipio] = useState('Seleccionar');
-    const [asunto, setAsunto] = useState('Seleccionar');
+    
+    const { handleSubmit, register, formState: {errors}} = useForm();
 
-    // Manejar el envío del formulario
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!nombre_realiza_tramite || !curp || !nombre || !paterno || 
-            !materno || !telefono || !celular || !correo || 
-            nivel === 'Seleccionar' || municipio === 'Seleccionar' || asunto === 'Seleccionar') {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Advertencia',
-                text: 'Rellene todos los campos',
-            });
-            return;
-        }
-
-        // Puedes agregar más validaciones según tus necesidades aquí
-
-        // Luego puedes hacer lo que desees con los datos del formulario
-
+    const onSubmit = (data) => {
         Swal.fire({
             icon: 'success',
-            title: 'Solicitud registrada',
-            text: 'La solicitud ha sido registrada exitosamente',
+            title: 'Alumno registrado',
+            html: `
+                <p>Datos del alumno</p>
+                <p><strong>CURP:</strong> ${data.curp}</p>
+                <p><strong>Nivel:</strong> ${data.nivel}</p>
+                <p><strong>Municipio:</strong> ${data.municipio}</p>
+                <p><strong>Asunto:</strong> ${data.asunto}</p>
+            `,
         });
-    }
+    };
 
     return (
         <div className="container">
-            <h1>Solicitud de Trámite</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="nombre_realiza_tramite">Nombre completo de quien realizara el tramite:</label>
-                <input
-                    type="text"
-                    id="nombre_realiza_tramite"
-                    name="nombre_realiza_tramite"
-                    value={nombre_realiza_tramite}
-                    onChange={(e) => setNombreRealizaTramite(e.target.value)}
+            <h1>Ticket de turno</h1>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor="nombre_realiza_tramite">Nombre completo de quien realizará el trámite:</label>
+                <input 
+                    type='text'
+                    {...register("nombre_realiza_tramite", {
+                        required: {
+                            value: true,
+                            message: "Rellene el campo vacio"
+                        },
+                        pattern: {
+                            value: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+ [A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/,
+                            message: "Digite su nombre completo (primer nombre y primer apellido)"
+                        },
+                    })}
                 />
-
+                {
+                    errors.nombre_realiza_tramite && <span>{errors.nombre_realiza_tramite.message}</span>
+                }
                 <label htmlFor="curp">CURP:</label>
-                <input
-                    type="text"
-                    id="curp"
-                    name="curp"
-                    value={curp}
-                    onChange={(e) => setCurp(e.target.value)}
+                <input 
+                    type='text'
+                    {...register("curp", {
+                        required: {
+                            value: "true",
+                            message: "Digite la CURP del alumno"
+                        },
+                        pattern: {
+                            value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
+                            message: "CURP no valida"
+                        },
+                    })}
                 />
-
+                {
+                    errors.curp && <span>{errors.curp.message}</span>
+                }
                 <label htmlFor="nombre">Nombre:</label>
-                <input
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
+                <input 
+                    type='text'
+                    {...register("nombre", {
+                        required: {
+                            value: "true",
+                            message: "Digite el nombre del alumno"
+                        },
+                        minLength: {
+                            value: 2,
+                            message: "Debe de ser de más de dos caracteres"
+                        },
+                        maxLength: {
+                            value: 15,
+                            message: "Debe de ser de menos de quince caracteres"
+                        }
+                    })}
                 />
-
+                {
+                    errors.nombre && <span>{errors.nombre.message}</span>
+                }
                 <label htmlFor="paterno">Paterno:</label>
-                <input
-                    type="text"
-                    id="paterno"
-                    name="paterno"
-                    value={paterno}
-                    onChange={(e) => setPaterno(e.target.value)}
+                <input 
+                    type='text'
+                    {...register("paterno", {
+                        required: {
+                            value: "true",
+                            message: "Digite el primer apellido del alumno"
+                        },
+                        minLength: {
+                            value: 2,
+                            message: "Debe de ser de más de dos caracteres"
+                        },
+                        maxLength: {
+                            value: 15,
+                            message: "Debe de ser de menos de quince caracteres"
+                        }
+                    })}
                 />
-
+                {
+                    errors.paterno && <span>{errors.paterno.message}</span>
+                }
                 <label htmlFor="materno">Materno:</label>
-                <input
-                    type="text"
-                    id="materno"
-                    name="materno"
-                    value={materno}
-                    onChange={(e) => setMaterno(e.target.value)}
+                <input 
+                    type='text'
+                    {...register("materno", {
+                        required: {
+                            value: "true",
+                            message: "Digite el segundo apellido del alumno"
+                        },
+                        minLength: {
+                            value: 2,
+                            message: "Debe de ser de más de dos caracteres"
+                        },
+                        maxLength: {
+                            value: 15,
+                            message: "Debe de ser de menos de quince caracteres"
+                        }
+                    })}
                 />
-
+                {
+                    errors.materno && <span>{errors.materno.message}</span>
+                }
                 <label htmlFor="telefono">Teléfono:</label>
-                <input
-                    type="text"
-                    id="telefono"
-                    name="telefono"
-                    value={telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
+                <input 
+                    type='number'
+                    {...register("telefono", {
+                        required: {
+                            value: true,
+                            message: "Digite su telefono"
+                        },
+                        minLength: {
+                            value: 10,
+                            message: "Minimo 10 caracteres"
+                        },
+                        maxLength: {
+                            value: 10,
+                            message: "Maximo 10 caracteres"
+                        }
+                    })}
                 />
-
+                {
+                    errors.telefono && <span>{errors.telefono.message}</span>
+                }
                 <label htmlFor="celular">Celular:</label>
-                <input
-                    type="text"
-                    id="celular"
-                    name="celular"
-                    value={celular}
-                    onChange={(e) => setCelular(e.target.value)}
+                <input 
+                    type='number'
+                    {...register("celular", {
+                        required: {
+                            value: true,
+                            message: "Digite su celular"
+                        },
+                        minLength: {
+                            value: 10,
+                            message: "Minimo 10 caracteres"
+                        },
+                        maxLength: {
+                            value: 10,
+                            message: "Maximo 10 caracteres"
+                        }
+                    })}
                 />
-
+                {
+                    errors.celular && <span>{errors.celular.message}</span>
+                }
                 <label htmlFor="correo">Correo:</label>
-                <input
-                    type="text"
-                    id="correo"
-                    name="correo"
-                    value={correo}
-                    onChange={(e) => setCorreo(e.target.value)}
+                <input 
+                    type='email'
+                    {...register("correo", {
+                        required: {
+                            value: 'true',
+                            message: 'Rellene el campo vacio'
+                        },
+                        pattern: {
+                            value:/[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,4}$/,
+                            message: 'Digite un correo valido'
+                        }
+                    })}
                 />
-
+                {
+                    errors.correo && <span>{errors.correo.message}</span>
+                }
                 <label htmlFor="nivel">Nivel al que desea ingresar o que ya cursa el alumno:</label>
-                <select
-                    id="nivel"
-                    name="nivel"
-                    value={nivel}
-                    onChange={(e) => setNivel(e.target.value)}
+                <select 
+                    {...register("nivel", {
+                        validate: (value) => {
+                            return value !== 'seleccionar' || 'Selecciona un nivel'
+                        }
+                    })}
                 >
-                    <option value="Seleccionar">Seleccionar</option>
-                    <option value="Primaria">Primaria</option>
-                    <option value="Secundaria">Secundaria</option>
-                    <option value="Preparatoria">Preparatoria</option>
-                    <option value="Licenciatura">Licenciatura</option>
+                <option value="seleccionar">Seleccionar</option>
+                <option value="primaria">Primaria</option>
+                <option value="secundaria">Secundaria</option>
+                <option value="preparatoria">Preparatoria</option>
+                <option value="licenciatura">Licenciatura</option>
                 </select>
+
+                {
+                    errors.nivel && <span>{errors.nivel.message}</span>
+                }
+
 
                 <label htmlFor="municipio">Municipio donde desea que estudie el alumno:</label>
-                <select
-                    id="municipio"
-                    name="municipio"
-                    value={municipio}
-                    onChange={(e) => setMunicipio(e.target.value)}
+                <select 
+                    {...register("municipio", {
+                        validate: (value) => {
+                            return value !== 'seleccionar' || 'Selecciona un municipio'
+                        }
+                    })}
                 >
-                    <option value="Seleccionar">Seleccionar</option>
-                    <option value="Saltillo">Saltillo</option>
-                    <option value="Ramos Arizpe">Ramos Arizpe</option>
-                    <option value="Parras">Parras</option>
+                <option value="seleccionar">Seleccionar</option>
+                <option value="saltillo">Saltillo</option>
+                <option value="ramos">Ramos Arizpe</option>
+                <option value="parras">Parras</option>
                 </select>
+
+                {
+                    errors.municipio && <span>{errors.municipio.message}</span>
+                }
 
                 <label htmlFor="asunto">Seleccione el asunto que va a tratar:</label>
-                <select
-                    id="asunto"
-                    name="asunto"
-                    value={asunto}
-                    onChange={(e) => setAsunto(e.target.value)}
+                <select 
+                    {...register("asunto", {
+                        validate: (value) => {
+                            return value !== 'seleccionar' || 'Selecciona un asunto'
+                        }
+                    })}
                 >
-                    <option value="Seleccionar">Seleccionar</option>
-                    <option value="Entrega de documentos">Entrega de documentos</option>
-                    <option value="Baja académica">Baja académica</option>
+                <option value="seleccionar">Seleccionar</option>
+                <option value="entrega">Entrega de documentos</option>
+                <option value="baja">Baja académica</option>
                 </select>
 
-                <button type="submit">Generar Turno</button>
+                {
+                    errors.asunto && <span>{errors.asunto.message}</span>
+                }
+
+                <button type="submit" className="btn-submit">Generar Turno</button>
             </form>
         </div>
     );
