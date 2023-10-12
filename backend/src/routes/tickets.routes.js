@@ -6,7 +6,7 @@ const router = Router();
 router.get('/', list)
 router.get('/list', list);
 router.post('/add', save);
-router.get('/edit/:id', update);
-router.get('/delete/:id', remove);
+router.put('/edit/:id', update);
+router.delete('/delete/:id', remove);
 
 export default router;
