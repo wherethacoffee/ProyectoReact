@@ -47,7 +47,6 @@ CREATE TABLE municipio (
 CREATE TABLE nivel (
   id INT AUTO_INCREMENT PRIMARY KEY,
   descripcion VARCHAR(255) NOT NULL,
-  nivel_id INT NOT NULL
 );
 
 CREATE TABLE turno (
