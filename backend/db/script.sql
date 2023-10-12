@@ -12,13 +12,13 @@ CREATE TABLE turno (
   id_municipio INT NOT NULL,
   id_status INT NOT NULL,
   id_asunto INT NOT NULL,
-  curp_alumno VARCHAR(100) NOT NULL,
+  curp_alumno VARCHAR(18) NOT NULL,
   FOREIGN KEY (id_representante) REFERENCES representante(id),
   FOREIGN KEY (id_municipio) REFERENCES municipio(id),
   FOREIGN KEY (id_status) REFERENCES `status`(id),
   FOREIGN KEY (id_asunto) REFERENCES asunto(id),
   FOREIGN KEY (curp_alumno) REFERENCES alumno(curp),
-  INDEX (curp_alumno(100))  -- Especifica la longitud máxima para la columna curp_alumno
+  INDEX (curp_alumno(18))  -- Especifica la longitud máxima para la columna curp_alumno
 );
 
 CREATE TABLE nivel (
