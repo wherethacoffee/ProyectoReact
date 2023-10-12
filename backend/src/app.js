@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import mysql from "mysql2";
 import myConnection from "express-myconnection";
+import bodyParser from "body-parser";
 
 import ticketsRoutes from './routes/tickets.routes.js'
 
@@ -14,9 +15,12 @@ app.use(myConnection(mysql, {
     user: 'root',
     password: 'admin',
     port: 3306,
-    database: 'desarrolloWeb'
+    database: 'tickets_turno'
 }, 'single')
 );
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(ticketsRoutes);
 
