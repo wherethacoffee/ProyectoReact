@@ -1,4 +1,4 @@
-DROP DATABASE tickets_turno;
+
 CREATE DATABASE tickets_turno;
 
 CREATE TABLE `admin` (
