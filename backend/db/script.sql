@@ -1,9 +1,9 @@
 CREATE TABLE representante (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre TEXT NOT NULL,
-  celular TEXT NOT NULL,
-  telefono TEXT NOT NULL,
-  correo TEXT NOT NULL
+  nombre VARCHAR(255) NOT NULL,
+  celular VARCHAR(20) NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  correo VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE turno (
@@ -12,7 +12,7 @@ CREATE TABLE turno (
   id_municipio INT NOT NULL,
   id_status INT NOT NULL,
   id_asunto INT NOT NULL,
-  curp_alumno TEXT NOT NULL,
+  curp_alumno VARCHAR(100) NOT NULL,
   FOREIGN KEY (id_representante) REFERENCES representante(id),
   FOREIGN KEY (id_municipio) REFERENCES municipio(id),
   FOREIGN KEY (id_status) REFERENCES `status`(id),
@@ -21,46 +21,43 @@ CREATE TABLE turno (
   INDEX (curp_alumno(100))  -- Especifica la longitud máxima para la columna curp_alumno
 );
 
-
 CREATE TABLE nivel (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion TEXT NOT NULL,
+  descripcion VARCHAR(255) NOT NULL,
   nivel_id INT NOT NULL
 );
 
 CREATE TABLE asunto (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion TEXT NOT NULL
+  descripcion VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `status` (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion TEXT NOT NULL
+  descripcion VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE municipio (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre TEXT NOT NULL,
+  nombre VARCHAR(255) NOT NULL,
   estado_id INT NOT NULL,
   FOREIGN KEY (estado_id) REFERENCES estado(id)
 );
 
 CREATE TABLE estado (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre TEXT NOT NULL
+  nombre VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE alumno (
-  curp TEXT PRIMARY KEY,
-  nombre TEXT NOT NULL,
-  materno TEXT NOT NULL,
-  paterno TEXT NOT NULL
+  curp VARCHAR(18) PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  materno VARCHAR(255) NOT NULL,
+  paterno VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `admin` (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  username TEXT NOT NULL,
-  `password` TEXT NOT NULL
+  username VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL
 );
-
-
