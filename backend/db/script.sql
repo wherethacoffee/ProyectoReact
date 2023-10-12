@@ -1,9 +1,53 @@
+DROP DATABASE tickets_turno;
+CREATE DATABASE tickets_turno;
+
+CREATE TABLE `admin` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE representante (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(255) NOT NULL,
   celular VARCHAR(20) NOT NULL,
   telefono VARCHAR(20) NOT NULL,
   correo VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE alumno (
+  curp VARCHAR(18) PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  materno VARCHAR(255) NOT NULL,
+  paterno VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE `status` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE asunto (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE estado (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE municipio (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  estado_id INT NOT NULL,
+  FOREIGN KEY (estado_id) REFERENCES estado(id)
+);
+
+CREATE TABLE nivel (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion VARCHAR(255) NOT NULL,
+  nivel_id INT NOT NULL
 );
 
 CREATE TABLE turno (
@@ -21,43 +65,3 @@ CREATE TABLE turno (
   INDEX (curp_alumno(18))  -- Especifica la longitud máxima para la columna curp_alumno
 );
 
-CREATE TABLE nivel (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion VARCHAR(255) NOT NULL,
-  nivel_id INT NOT NULL
-);
-
-CREATE TABLE asunto (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE `status` (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  descripcion VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE municipio (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(255) NOT NULL,
-  estado_id INT NOT NULL,
-  FOREIGN KEY (estado_id) REFERENCES estado(id)
-);
-
-CREATE TABLE estado (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE alumno (
-  curp VARCHAR(18) PRIMARY KEY,
-  nombre VARCHAR(255) NOT NULL,
-  materno VARCHAR(255) NOT NULL,
-  paterno VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE `admin` (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
-  `password` VARCHAR(255) NOT NULL
-);
