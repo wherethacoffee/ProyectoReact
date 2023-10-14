@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { save, list, remove, update} from "../controllers/tickets.controller.js"
+import { save, list, update, remove } from "../controllers/admins.controller.js";
 
 const router = Router();
 
