@@ -11,8 +11,8 @@ INSERT INTO alumno (curp, nombre, materno, paterno) VALUES
 ('CURP56789012345678', 'Alumno 2', 'Materno2', 'Paterno2');
 
 INSERT INTO `status` (descripcion) VALUES
-('Active'),
-('Inactive');
+('Pendiente'),
+('Realizado');
 
 INSERT INTO asunto (descripcion) VALUES
 ('Documentos'),
