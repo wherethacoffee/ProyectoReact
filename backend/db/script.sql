@@ -66,3 +66,20 @@ CREATE TABLE turno (
   INDEX (curp_alumno(18))  -- Especifica la longitud máxima para la columna curp_alumno
 );
 
+CREATE VIEW VistaTurno AS
+SELECT
+    t.id,
+    r.nombre AS representante,
+    t.curp_alumno,
+    n.descripcion AS nivel,
+    m.nombre AS municipio,
+    a.descripcion AS asunto,
+    s.descripcion AS `status`
+FROM turno t
+JOIN representante r ON t.id_representante = r.id
+JOIN municipio m ON t.id_municipio = m.id
+JOIN `status` s ON t.id_status = s.id
+JOIN asunto a ON t.id_asunto = a.id
+JOIN nivel n ON t.id_nivel = n.id
+JOIN alumno al ON t.curp_alumno = al.curp;
+
