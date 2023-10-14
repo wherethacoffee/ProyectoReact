@@ -1,7 +1,7 @@
 export const save = (req, res) => {
     const data = req.body;
     req.getConnection((err, conn) => {
-        conn.query('INSERT INTO turno SET ?', [data], (err, turno) => {
+        conn.query('INSERT INTO admin SET ?', [data], (err, admin) => {
             if (err) {
                 res.json(err);
             }
@@ -12,11 +12,11 @@ export const save = (req, res) => {
 
 export const list = (req, res) => {
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM turno', (err, turnos) => {
+        conn.query('SELECT * FROM admin', (err, rows) => {
             if (err) {
                 res.json(err);
             }
-            res.json(turnos);
+            res.json(rows);
         });
     });
 };
@@ -25,7 +25,7 @@ export const remove = (req, res) => {
     const { id } = req.params;
 
     req.getConnection((err, conn) => {
-        conn.query('DELETE FROM turno WHERE id = ?', [id], (err, rows) => {
+        conn.query('DELETE FROM admin WHERE id = ?', [id], (err, rows) => {
             if (err) {
                 res.json(err);
             }
@@ -36,10 +36,10 @@ export const remove = (req, res) => {
 
 export const update = (req, res) => {
     const { id } = req.params;
-    const newTurno= req.body;
-    console.log(newTurno);
+    const newAdmin= req.body;
+    console.log(newAdmin);
     req.getConnection((err, conn) => {
-        conn.query('UPDATE turno set ? WHERE id = ?', [newTurno, id], (err, rows) => {
+        conn.query('UPDATE admin set ? WHERE id = ?', [newAdmin, id], (err, rows) => {
             if (err) {
                 res.json(err);
             }
