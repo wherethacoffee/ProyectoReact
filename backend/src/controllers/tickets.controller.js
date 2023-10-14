@@ -12,7 +12,7 @@ export const save = (req, res) => {
 
 export const list = (req, res) => {
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM turno', (err, turnos) => {
+        conn.query('SELECT * FROM VistaTurno', (err, turnos) => {
             if (err) {
                 res.json(err);
             }
