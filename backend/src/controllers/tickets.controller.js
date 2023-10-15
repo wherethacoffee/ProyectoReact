@@ -1,21 +1,31 @@
-export const save = (req, res) => {
+export const save = async (req, res) => {
     const data = req.body;
-    req.getConnection((err, conn) => {
-        if (err) {
-            res.status(500).json(err); // Enviar respuesta de error y salir de la función
-            return;
-        }
 
-        conn.query('INSERT INTO turno SET ?', [data], (err, turno) => {
-            if (err) {
-                res.status(500).json(err); // Enviar respuesta de error en caso de error en la consulta
-                return;
-            }
-            
-            res.send('Registrando'); // Solo enviar la respuesta en caso de éxito
+    try {
+        const conn = await new Promise((resolve, reject) => {
+            req.getConnection((err, conn) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(conn);
+            });
         });
-    });
+
+        const turno = await new Promise((resolve, reject) => {
+            conn.query('INSERT INTO turno SET ?', [data], (err, turno) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(turno);
+            });
+        });
+
+        res.send('Registrando');
+    } catch (error) {
+        res.status(500).json(error);
+    }
 };
+
 
 
 export const list = async (req, res) => {

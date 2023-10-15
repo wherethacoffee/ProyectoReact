@@ -1,6 +1,6 @@
 const API = 'http://localhost:4000'
 
-export const registerRequest = data => fetch(`${API}/agregar`, { 
+export const registerRequest = data => fetch(`${API}/turno/agregar`, { 
     method: "POST",
     body: JSON.stringify({
         "id_representante": data.nombre_realiza_tramite,
