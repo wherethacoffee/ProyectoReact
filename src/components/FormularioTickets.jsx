@@ -2,12 +2,16 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import '../styles/FormStyle.css';
+import {registerRequest} from '../api/registerForm'
 
 const RegistroTickets = () => {
     
     const { handleSubmit, register, formState: {errors}} = useForm();
 
-    const onSubmit = (data) => {
+
+
+    const onSubmit = async(data) => {
+        await registerRequest(data);
         Swal.fire({
             icon: 'success',
             title: 'Alumno registrado',
@@ -34,8 +38,8 @@ const RegistroTickets = () => {
                             message: "Rellene el campo vacio"
                         },
                         pattern: {
-                            value: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+ [A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/,
-                            message: "Digite su nombre completo (primer nombre y primer apellido)"
+                           /* value: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+ [A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/,
+                        message: "Digite su nombre completo (primer nombre y primer apellido)"*/
                         },
                     })}
                 />
@@ -59,7 +63,7 @@ const RegistroTickets = () => {
                 {
                     errors.curp && <span>{errors.curp.message}</span>
                 }
-                <label htmlFor="nombre">Nombre:</label>
+               {} <label htmlFor="nombre">Nombre:</label> 
                 <input 
                     type='text'
                     {...register("nombre", {
@@ -194,6 +198,8 @@ const RegistroTickets = () => {
                 <option value="secundaria">Secundaria</option>
                 <option value="preparatoria">Preparatoria</option>
                 <option value="licenciatura">Licenciatura</option>
+                <option value="1">1</option>
+
                 </select>
 
                 {
@@ -213,6 +219,8 @@ const RegistroTickets = () => {
                 <option value="saltillo">Saltillo</option>
                 <option value="ramos">Ramos Arizpe</option>
                 <option value="parras">Parras</option>
+                <option value="1">1</option>
+
                 </select>
 
                 {
@@ -230,6 +238,8 @@ const RegistroTickets = () => {
                 <option value="seleccionar">Seleccionar</option>
                 <option value="entrega">Entrega de documentos</option>
                 <option value="baja">Baja académica</option>
+                <option value="1">1</option>
+
                 </select>
 
                 {
