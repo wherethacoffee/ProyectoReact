@@ -5,8 +5,7 @@ import Login from './components/Login';
 import RegistroTickets from './components/FormularioTickets';
 import CrearUsuario from './components/CrearUsuario';
 import TurnoAdminComponent  from './components/TurnosAdmin'
-
-
+import Dashboards from './components/Dashboard';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,6 +53,10 @@ function App() {
         <Route
           path = "/tickets-admin"
           element ={<TurnoAdminComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+        />
+        <Route
+          path = "/dashboard"
+          element ={<Dashboards isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
         />
         {/* Otras rutas */}
       </Routes>
