@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import '../styles/FormStyle.css';
-import {registerRequest} from '../api/registerForm'
+import {registerTurno} from '../services/turno.services'
 
 const RegistroTickets = () => {
     
@@ -11,7 +11,7 @@ const RegistroTickets = () => {
 
 
     const onSubmit = async(data) => {
-        await registerRequest(data);
+        await registerTurno(data);
         Swal.fire({
             icon: 'success',
             title: 'Alumno registrado',
