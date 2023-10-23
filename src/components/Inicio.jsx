@@ -1,6 +1,8 @@
 import React from 'react';
-import logo from '../images/logo.jpg'; // Importa tu logo
+import logo from '../images/logo.jpg';
 import '../styles/InicioStyle.css';
+import { Link } from 'react-router-dom'; // Importa Link de react-router-dom
+import Login from '../components/Login';
 
 const Inicio = ({ isLoggedIn, isAdmin }) => {
   return (
@@ -9,7 +11,7 @@ const Inicio = ({ isLoggedIn, isAdmin }) => {
         <img className="logo" src={logo} alt="Logo" />
         <h1 className="heading">Sistema de Tickets</h1>
         <div className="login-button">
-          <a href="/iniciar-sesion">Iniciar Sesión</a>
+          <Link to="/iniciar-sesion">Iniciar Sesión</Link>
         </div>
       </header>
       <div className="content">
