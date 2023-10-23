@@ -2,7 +2,6 @@ import React from 'react';
 import logo from '../images/logo.jpg';
 import '../styles/InicioStyle.css';
 import { Link } from 'react-router-dom'; // Importa Link de react-router-dom
-import Login from '../components/Login';
 
 const Inicio = ({ isLoggedIn, isAdmin }) => {
   return (
