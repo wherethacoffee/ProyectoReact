@@ -1,17 +1,17 @@
-const API = 'https://apiticketturno-production.up.railway.app'
+const API = 'https://apiticketturno-production.up.railway.app/admin'
 
-export const registerAdmin = data => fetch(`${API}/admin/agregar`, { 
+export const registerAdmin = data => fetch(`${API}/agregar`, { 
     method: "POST",
     body: JSON.stringify({
         "username": data.username,
-        "password": data.password
+        "pwd": data.password
       }),
     headers: {
       "Content-Type": "application/json"
     }
-  })
+  });
 
-  export const listAdmins = () => fetch(`${API}/admin/listar`, {
+  export const listAdmins = () => fetch(`${API}/listar`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -19,7 +19,7 @@ export const registerAdmin = data => fetch(`${API}/admin/agregar`, {
   });
   
   // Buscar un admin por ID
-  export const findAdmin = (idAdmin) => fetch(`${API}/admin/buscar/${idAdmin}`, {
+  export const findAdmin = (idAdmin) => fetch(`${API}/buscar/${idAdmin}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
@@ -27,11 +27,11 @@ export const registerAdmin = data => fetch(`${API}/admin/agregar`, {
   });
   
   // Actualizar un admin por ID
-  export const updateAdmin = (idAdmin, data) => fetch(`${API}/admin/actualizar/${idAdmin}`, {
+  export const updateAdmin = (idAdmin, data) => fetch(`${API}/actualizar/${idAdmin}`, {
     method: "PUT",
     body: JSON.stringify({
       "username": data.username,
-      "password": data.password
+      "pwd": data.password
     }),
     headers: {
       "Content-Type": "application/json"
@@ -39,7 +39,7 @@ export const registerAdmin = data => fetch(`${API}/admin/agregar`, {
   });
   
   // Eliminar un admin por ID
-  export const deleteAdmin = (idAdmin) => fetch(`${API}/admin/eliminar/${idAdmin}`, {
+  export const deleteAdmin = (idAdmin) => fetch(`${API}/eliminar/${idAdmin}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json"
