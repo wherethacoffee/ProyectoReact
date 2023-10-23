@@ -1,0 +1,74 @@
+/* InicioStyle.css */
+
+body {
+  background-color: #1f1f1f; /* Fondo oscuro */
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+.inicio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px; /* Ancho máximo del contenedor */
+  margin: 0 auto; /* Centra el contenedor en la página */
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #303030; /* Fondo del encabezado */
+  border-radius: 8px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.heading {
+  font-size: 24px;
+}
+
+.login-button {
+  background-color: #ff4646; /* Rojo */
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px; /* Ajusta el tamaño del botón de inicio de sesión */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.login-button a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.login-button:hover {
+  background-color: #d93232; /* Rojo más oscuro al pasar el mouse */
+}
+
+.large-button {
+  background-color: #ff4646; /* Rojo */
+  color: #ffffff;
+  border: none;
+  padding: 16px 32px; /* Tamaño de los botones de funcionalidades */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  margin: 10px;
+}
+
+.large-button:hover {
+  background-color: #d93232; /* Rojo más oscuro al pasar el mouse */
+}
