@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import logo from '../images/iniciar-sesion.png';
+import logo from '../images/iniciar-sesion.png'
 import '../styles/LoginStyle.css'; // Importa los estilos específicos del login
 
 const Login = () => {
