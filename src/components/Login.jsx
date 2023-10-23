@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
-import logo from '../images/iniciar-sesion.png'
-import '../styles/LoginStyle.css'; // Importa los estilos específicos del login
+import logo from '../images/iniciar-sesion.png';
+import '../styles/LoginStyle.css';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
   const recaptchaRef = React.createRef();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Verifica el captcha
-    recaptchaRef.current.executeAsync().then((captchaValue) => {
-      // Si el captcha es correcto, actualiza el estado para habilitar el botón de "Acceder"
-      setIsCaptchaVerified(true);
-      console.log('Captcha Value:', captchaValue);
-      // Aquí puedes implementar la lógica para verificar el captcha y enviar los datos del formulario al servidor
-    });
+    // Verifica el captcha aquí (puedes implementar tu lógica de verificación aquí)
+    setIsCaptchaVerified(true); // Simulación de verificación del captcha para propósitos de demostración
+
+    // Simulación de verificación del usuario como administrador
+    // Cambia esta lógica según tu sistema de autenticación
+    const username = e.target.username.value;
+    const password = e.target.password.value;
+
+    if (isCaptchaVerified && username === 'admin' && password === 'admin') {
+      // Si el captcha es correcto y las credenciales son de un administrador, redirige a la página de inicio
+      onLogin(username, password); // Llama a la función onLogin para actualizar el estado de isLoggedIn y isAdmin
+      navigate('/');
+    } else {
+      // Lógica para mostrar mensajes de error o manejar el acceso no autorizado
+      console.log('Acceso no autorizado');
+    }
   };
 
   return (
@@ -26,13 +37,19 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Usuario:</label>
-            <input type="text" id="username" name="username" required />
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              placeholder="Ejemplo: usuario123"
+              className="input-field"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required />
+            <input type="password" id="password" name="password" required className="input-field" />
           </div>
-          {/* Implementa el captcha aquí */}
           <div className="form-group">
             <ReCAPTCHA
               sitekey="6Legf70oAAAAAO6RUj038AiJITYbnKr0vCVwZnig"
@@ -41,9 +58,9 @@ const Login = () => {
               className="g-recaptcha"
             />
           </div>
-          <button type="submit" className="login-button" disabled={!isCaptchaVerified}>
+          <button type="submit" className="login-button">
             Acceder
-            </button>
+          </button>
         </form>
         <button className="create-account-button">
           <a href="/crear-cuenta">Crear una cuenta nueva</a>
