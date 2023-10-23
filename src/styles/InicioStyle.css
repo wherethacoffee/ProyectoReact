@@ -1,3 +1,5 @@
+/* styles/InicioStyle.css */
+
 body {
   background-color: #1f1f1f;
   color: #ffffff;
@@ -35,39 +37,38 @@ body {
   font-size: 24px;
 }
 
-.login-button {
-  background-color: #ff4646;
-  color: #ffffff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-decoration: none;
-  margin-bottom: 20px;
-}
-
-.login-button a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.login-button:hover {
-  background-color: #d93232;
-}
-
+.small-button,
 .large-button {
   background-color: #ff4646;
   color: #ffffff;
   border: none;
-  padding: 20px 40px;
+  padding: 15px 30px;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
   margin: 10px;
+  text-align: center;
 }
 
+.small-button:hover,
 .large-button:hover {
   background-color: #d93232;
+}
+
+/* Estilos específicos para el botón "Iniciar Sesión" */
+.small-button {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  text-decoration: none;
+}
+
+/* Estilos específicos para el botón "Crear Ticket" */
+.large-button:first-of-type {
+  margin-top: 20px;
+}
+
+/* Estilos específicos para el botón "Modificar Tickets" */
+.large-button:last-of-type {
+  margin-bottom: 20px;
 }
