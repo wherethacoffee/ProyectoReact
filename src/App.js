@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Inicio from './components/Inicio';
 import Login from './components/Login';
 import RegistroTickets from './components/FormularioTickets';
+import CrearUsuario from './components/CrearUsuario';
+import TurnoAdminComponent  from './components/TurnosAdmin'
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,6 +46,14 @@ function App() {
         <Route
           path = "/crear-ticket"
           element ={<RegistroTickets isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+        />
+        <Route
+          path = "/crear-cuenta"
+          element ={<CrearUsuario isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+        />
+        <Route
+          path = "/tickets-admin"
+          element ={<TurnoAdminComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
         />
         {/* Otras rutas */}
       </Routes>

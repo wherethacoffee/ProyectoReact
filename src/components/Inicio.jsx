@@ -27,7 +27,9 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
             Crear Ticket
           </Link>
           {isLoggedIn && isAdmin && (
-            <button className="large-button">Modificar Tickets</button>
+          <Link to="/tickets-admin" className="large-button">
+                Modificar Tickets
+          </Link>
           )}
         </div>
       </div>
