@@ -1,7 +1,5 @@
-/* InicioStyle.css */
-
 body {
-  background-color: #1f1f1f; /* Fondo oscuro */
+  background-color: #1f1f1f;
   color: #ffffff;
   margin: 0;
   padding: 0;
@@ -12,8 +10,8 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  max-width: 1200px; /* Ancho máximo del contenedor */
-  margin: 0 auto; /* Centra el contenedor en la página */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .header {
@@ -23,7 +21,7 @@ body {
   justify-content: space-between;
   margin-bottom: 20px;
   padding: 20px;
-  background-color: #303030; /* Fondo del encabezado */
+  background-color: #303030;
   border-radius: 8px;
 }
 
@@ -38,15 +36,15 @@ body {
 }
 
 .login-button {
-  background-color: #ff4646; /* Rojo */
+  background-color: #ff4646;
   color: #ffffff;
   border: none;
-  padding: 8px 16px; /* Ajusta el tamaño del botón de inicio de sesión */
+  padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
-  margin-bottom: 20px; /* Agrega espacio entre el encabezado y el botón de inicio de sesión */
+  margin-bottom: 20px;
 }
 
 .login-button a {
@@ -55,15 +53,15 @@ body {
 }
 
 .login-button:hover {
-  background-color: #d93232; /* Rojo más oscuro al pasar el mouse */
+  background-color: #d93232;
 }
 
 .large-button {
-  background-color: #ff4646; /* Rojo */
+  background-color: #ff4646;
   color: #ffffff;
   border: none;
-  padding: 16px 32px; /* Tamaño de los botones de funcionalidades */
-  border-radius: 4px;
+  padding: 20px 40px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
@@ -71,5 +69,5 @@ body {
 }
 
 .large-button:hover {
-  background-color: #d93232; /* Rojo más oscuro al pasar el mouse */
+  background-color: #d93232;
 }

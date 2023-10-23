@@ -1,6 +1,5 @@
-/* LoginStyle.css */
 body {
-  background-color: #1f1f1f; /* Fondo oscuro */
+  background-color: #1f1f1f;
   color: #ffffff;
   margin: 0;
   font-family: Arial, sans-serif;
@@ -15,7 +14,7 @@ body {
 
 .login-box {
   text-align: center;
-  background-color: #2a2a2a; /* Fondo del contenedor */
+  background-color: #2a2a2a;
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
@@ -33,24 +32,24 @@ body {
 }
 
 .input-field {
-  width: calc(100% - 20px); /* Reducir el ancho para incluir el relleno */
+  width: calc(100% - 20px);
   padding: 10px;
   border: 1px solid #ffffff;
-  background-color: #2a2a2a; /* Fondo del campo de entrada */
+  background-color: #2a2a2a;
   color: #ffffff;
   border-radius: 4px;
   font-size: 14px;
+  outline: none; /* Elimina el contorno del input al hacer clic en él */
 }
 
 /* Estilos para el captcha */
 .g-recaptcha {
-  display: block; /* Hacer que el captcha se muestre como un bloque debajo de los campos de entrada */
-  margin-top: 10px; /* Margen superior para separar el captcha de los campos de entrada */
+  margin-top: 10px;
 }
 
 .login-button,
 .create-account-button {
-  background-color: #007bff; /* Azul */
+  background-color: #007bff;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -58,13 +57,26 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
-  margin-top: 10px; /* Agregar margen superior para separar los botones */
+  margin-top: 10px;
   display: block;
-  width: 100%; /* Hacer que el botón ocupe el ancho completo */
+  width: 100%;
   font-size: 14px;
 }
 
 .login-button:hover,
 .create-account-button:hover {
-  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+  background-color: #0056b3;
 }
+
+.g-recaptcha {
+  min-height: 78px; /* Establece una altura mínima para el contenedor de ReCAPTCHA */
+}
+
+.g-recaptcha {
+  z-index: 9999; /* Establece un z-index alto para el contenedor de ReCAPTCHA */.login-button {
+    margin-top: 20px; /* Ajusta el margen superior del botón de iniciar sesión */
+}
+
+}
+
+
