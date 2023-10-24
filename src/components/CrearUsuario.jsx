@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/CrearUsuarioStyle.css';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { registerAdmin } from '../services/admin.services';
 
 const CrearUsuario = () => {
   const navigate = useNavigate();
@@ -9,13 +10,26 @@ const CrearUsuario = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const onSubmit = (data) => {
-    // Lógica para manejar el envío del formulario (aún no implementado)
-    console.log(data);
-    // Mostrar alerta
-    window.alert('Usuario creado correctamente');
-    // Redirigir a la página de inicio
-    navigate('/');
+  const onSubmit = async (data) => {
+    try {
+      // Llama a la función registerAdmin para enviar los datos a la API
+      const response = await registerAdmin({
+        username: data.usuario,
+        password: data.password,
+      });
+  
+      if (response.ok) {                                                        
+        // Si la respuesta es exitosa, muestra una alerta y redirige a la página de inicio
+        window.alert('Usuario creado correctamente');                                                                 
+        navigate('/');
+      } else {
+        // Si la respuesta no es exitosa, maneja el error según tus necesidades
+        console.error('Error al crear el usuario:', response.statusText);
+      }
+    } catch (error) {
+      // Maneja errores de red u otros errores
+      console.error('Error al crear el usuario:', error);
+    }
   };
 
   return (
