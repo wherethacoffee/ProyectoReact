@@ -45,3 +45,14 @@ export const registerAdmin = data => fetch(`${API}/agregar`, {
       "Content-Type": "application/json"
     }
   });
+
+  export const loginAdmin = data => fetch(`${API}/login`, { 
+    method: "POST",
+    body: JSON.stringify({
+        "username": data.username,
+        "pwd": data.password
+      }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });

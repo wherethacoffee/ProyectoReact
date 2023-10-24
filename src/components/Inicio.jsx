@@ -41,6 +41,11 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
                  Grafica Total
           </Link>
           )}
+          {isLoggedIn && isAdmin && (
+          <Link to="/crud-catalogos" className="large-button">
+                 Modificar Catalogos
+          </Link>
+          )}
         </div>
       </div>
     </div>

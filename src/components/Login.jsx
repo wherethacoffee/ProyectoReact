@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import logo from '../images/iniciar-sesion.png';
 import '../styles/LoginStyle.css';
 import { useNavigate } from 'react-router-dom';
+import { loginAdmin } from '../services/admin.services'
 
 const Login = ({ onLogin }) => {
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
@@ -15,6 +16,23 @@ const Login = ({ onLogin }) => {
     // Por ejemplo, puedes enviar el valor del captcha a tu servidor para su verificación
     setIsCaptchaVerified(true); // Simulación de verificación del captcha para propósitos de demostración
   };
+  const [admins, setAdmins] = useState([]);
+
+
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      try {
+        const response = await loginAdmin();
+        const data = await response.json();
+        setAdmins(data); // Usa el estado para almacenar la lista de administradores
+      } catch (error) {
+        console.error('Error al obtener la lista de administradores', error);
+      }
+    };
+
+    fetchAdmins();
+  }, []); // El segundo argumento [] asegura que se ejecute solo una vez al montar el componente
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,16 +40,24 @@ const Login = ({ onLogin }) => {
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    if (!isCaptchaVerified) {
-      setErrorMessage('Favor de completar el captcha.'); // Establece el mensaje de error si el captcha no está verificado
-      return; // Evita continuar con el proceso de inicio de sesión si el captcha no está verificado
-    }
 
-    if (username === 'admin' && password === 'admin') {
-      onLogin(username, password);
-      navigate('/');
-    } else {
-      setErrorMessage('Credenciales incorrectas.'); // Establece el mensaje de error si las credenciales son incorrectas
+    // Verifica las credenciales
+    
+
+    try {
+      const response = loginAdmin({ username, password });
+
+      if (response.status = "200") {
+        // Si la respuesta de la API indica un inicio de sesión exitoso, redirige a la página de inicio
+        onLogin(username, password);
+        navigate('/');
+      } else {
+        // Lógica para mostrar mensajes de error desde la API
+        console.log('Error en el inicio de sesión:', response.message);
+      }
+    } catch (error) {
+      // Manejo de errores generales
+      console.error('Error en la solicitud de inicio de sesión:', error);
     }
   };
 

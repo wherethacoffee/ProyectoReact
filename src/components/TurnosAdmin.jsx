@@ -135,8 +135,8 @@ const TurnoAdminComponent = () => {
 
     const handleUpdateForm = async () => {
         try {
-            await updateTurno(selectedTurno.idTurno, editedData);
-            console.log(selectedTurno.idTurno);
+            await updateTurno(selectedTurno.Alumno.curp, editedData);
+            console.log(selectedTurno.Alumno.curp);
             console.log(editedData);
             loadTurnos(); // Recargar la lista después de la actualización
             setSelectedTurno(null); // Limpiar el turno seleccionado

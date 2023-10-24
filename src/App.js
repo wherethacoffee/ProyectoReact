@@ -1,27 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Inicio from './components/Inicio';
 import Login from './components/Login';
+import { loginAdmin} from './services/admin.services';
 import RegistroTickets from './components/FormularioTickets';
 import CrearUsuario from './components/CrearUsuario';
 import TurnoAdminComponent  from './components/TurnosAdmin'
 import Dashboards from './components/Dashboard';
 import Dashboard_total from './components/Dashboard_total';
+import CrudComponent from './components/CrudCatalogos'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [admins, setAdmins] = useState([]);
+
+  
+  
 
   const handleLogin = (username, password) => {
+
+    const response = loginAdmin({ username, password });
+
     // Lógica de autenticación aquí, actualiza isLoggedIn y isAdmin según la autenticación
     // Simulación: Si las credenciales son correctas y el usuario es administrador
-    if (username === 'admin' && password === 'admin') {
+    if (response.status = "200") {
       setIsLoggedIn(true);
       setIsAdmin(true);
       // Guarda el estado de administrador en localStorage
       localStorage.setItem('isAdmin', true);
     } else {
       // Lógica para manejar el acceso no autorizado o mostrar mensajes de error
+      console.error("Verificaion fallida")
+      console.log(admins)
     }
   };
 
@@ -62,6 +73,10 @@ function App() {
         <Route
           path = "/dashboard-total"
           element ={<Dashboard_total isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+        />
+        <Route
+          path = "/crud-catalogos"
+          element ={<CrudComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
         />
         {/* Otras rutas */}
       </Routes>
