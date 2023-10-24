@@ -1,0 +1,74 @@
+/* styles/InicioStyle.css */
+
+body {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+.inicio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #303030;
+  border-radius: 8px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.heading {
+  font-size: 24px;
+}
+
+.small-button,
+.large-button {
+  background-color: #ff4646;
+  color: #ffffff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  margin: 10px;
+  text-align: center;
+}
+
+.small-button:hover,
+.large-button:hover {
+  background-color: #d93232;
+}
+
+/* Estilos específicos para el botón "Iniciar Sesión" */
+.small-button {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  text-decoration: none;
+}
+
+/* Estilos específicos para el botón "Crear Ticket" */
+.large-button:first-of-type {
+  margin-top: 20px;
+}
+
+/* Estilos específicos para el botón "Modificar Tickets" */
+.large-button:last-of-type {
+  margin-bottom: 20px;
+}

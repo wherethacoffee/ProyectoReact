@@ -59,6 +59,6 @@ INSERT INTO nivel (descripcion) VALUES
 ('Primaria'),
 ('Secundaria');
 
-INSERT INTO turno (id_representante, id_municipio, id_status, id_asunto, curp_alumno) VALUES
-(1, 1, 1, 1, 'CURP12345678901234'),
-(2, 2, 2, 2, 'CURP56789012345678');
+INSERT INTO turno (id_representante, id_municipio, id_status, id_asunto, id_nivel, curp_alumno) VALUES
+(1, 1, 1, 1, 1, 'CURP12345678901234'),
+(2, 2, 2, 2, 2, 'CURP56789012345678');

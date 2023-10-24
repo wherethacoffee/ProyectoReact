@@ -2,12 +2,66 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import '../styles/FormStyle.css';
+import { registerTurno } from '../services/turno.services'
+import { listMunicipio } from '../services/municipio.services';
+import { listNivel } from '../services/nivel.services';
+import { useState, useEffect } from 'react';
+import { listAsunto } from '../services/asunto.services';
+
 
 const RegistroTickets = () => {
-    
-    const { handleSubmit, register, formState: {errors}} = useForm();
 
-    const onSubmit = (data) => {
+    const { handleSubmit, register, formState: { errors } } = useForm();
+
+        const [niveles, setNiveles] = useState([]);
+        const [municipios, setMunicipios] = useState([]);
+        const [asuntos, setAsuntos] = useState([]);
+
+        // Resto del código...
+        useEffect(() => {
+            // Cargar datos para el select de Nivel
+            const fetchNiveles = async () => {
+                try {
+                    const response = await listNivel();
+                    const nivelesData = await response.json();
+                    setNiveles(nivelesData);
+                } catch (error) {
+                    console.error('Error al obtener los niveles', error);
+                }
+            };
+            // Cargar datos para el select de Municipio usando la función listMunicipio
+            const fetchMunicipios = async () => {
+                try {
+                    const response = await listMunicipio();
+                    const municipiosData = await response.json();
+                    setMunicipios(municipiosData);
+                } catch (error) {
+                    console.error('Error al obtener municipios', error);
+                }
+            };
+
+
+            // Cargar datos para el select de Asunto
+            const fetchAsuntos = async () => {
+                try {
+                    const response = await listAsunto();
+                    const asuntosData = await response.json();
+                    setAsuntos(asuntosData);
+                } catch (error) {
+                    console.error('Error al obtener asuntos', error);
+                }
+            };
+
+            // Llama a la función para cargar los municipios
+            fetchMunicipios();
+            fetchNiveles();
+            fetchAsuntos();
+        }, []);
+
+    
+
+    const onSubmit = async (data) => {
+        await registerTurno(data);
         Swal.fire({
             icon: 'success',
             title: 'Alumno registrado',
@@ -26,7 +80,7 @@ const RegistroTickets = () => {
             <h1>Ticket de turno</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="nombre_realiza_tramite">Nombre completo de quien realizará el trámite:</label>
-                <input 
+                <input
                     type='text'
                     {...register("nombre_realiza_tramite", {
                         required: {
@@ -34,8 +88,8 @@ const RegistroTickets = () => {
                             message: "Rellene el campo vacio"
                         },
                         pattern: {
-                            value: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+ [A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/,
-                            message: "Digite su nombre completo (primer nombre y primer apellido)"
+                            /* value: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+ [A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/,
+                         message: "Digite su nombre completo (primer nombre y primer apellido)"*/
                         },
                     })}
                 />
@@ -43,7 +97,7 @@ const RegistroTickets = () => {
                     errors.nombre_realiza_tramite && <span>{errors.nombre_realiza_tramite.message}</span>
                 }
                 <label htmlFor="curp">CURP:</label>
-                <input 
+                <input
                     type='text'
                     {...register("curp", {
                         required: {
@@ -59,8 +113,8 @@ const RegistroTickets = () => {
                 {
                     errors.curp && <span>{errors.curp.message}</span>
                 }
-                <label htmlFor="nombre">Nombre:</label>
-                <input 
+                { } <label htmlFor="nombre">Nombre:</label>
+                <input
                     type='text'
                     {...register("nombre", {
                         required: {
@@ -81,7 +135,7 @@ const RegistroTickets = () => {
                     errors.nombre && <span>{errors.nombre.message}</span>
                 }
                 <label htmlFor="paterno">Paterno:</label>
-                <input 
+                <input
                     type='text'
                     {...register("paterno", {
                         required: {
@@ -102,7 +156,7 @@ const RegistroTickets = () => {
                     errors.paterno && <span>{errors.paterno.message}</span>
                 }
                 <label htmlFor="materno">Materno:</label>
-                <input 
+                <input
                     type='text'
                     {...register("materno", {
                         required: {
@@ -123,7 +177,7 @@ const RegistroTickets = () => {
                     errors.materno && <span>{errors.materno.message}</span>
                 }
                 <label htmlFor="telefono">Teléfono:</label>
-                <input 
+                <input
                     type='number'
                     {...register("telefono", {
                         required: {
@@ -144,7 +198,7 @@ const RegistroTickets = () => {
                     errors.telefono && <span>{errors.telefono.message}</span>
                 }
                 <label htmlFor="celular">Celular:</label>
-                <input 
+                <input
                     type='number'
                     {...register("celular", {
                         required: {
@@ -165,7 +219,7 @@ const RegistroTickets = () => {
                     errors.celular && <span>{errors.celular.message}</span>
                 }
                 <label htmlFor="correo">Correo:</label>
-                <input 
+                <input
                     type='email'
                     {...register("correo", {
                         required: {
@@ -173,7 +227,7 @@ const RegistroTickets = () => {
                             message: 'Rellene el campo vacio'
                         },
                         pattern: {
-                            value:/[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,4}$/,
+                            value: /[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,4}$/,
                             message: 'Digite un correo valido'
                         }
                     })}
@@ -181,60 +235,48 @@ const RegistroTickets = () => {
                 {
                     errors.correo && <span>{errors.correo.message}</span>
                 }
-                <label htmlFor="nivel">Nivel al que desea ingresar o que ya cursa el alumno:</label>
-                <select 
+            
+                <select
                     {...register("nivel", {
                         validate: (value) => {
-                            return value !== 'seleccionar' || 'Selecciona un nivel'
+                            return value !== 'seleccionar' || 'Selecciona un nivel';
                         }
                     })}
                 >
-                <option value="seleccionar">Seleccionar</option>
-                <option value="primaria">Primaria</option>
-                <option value="secundaria">Secundaria</option>
-                <option value="preparatoria">Preparatoria</option>
-                <option value="licenciatura">Licenciatura</option>
+                    <option value="seleccionar">Seleccionar</option>
+                    {niveles.map((nivel) => (
+                        <option key={nivel.idNivel} value={nivel.idNivel}>{nivel.descripcion}</option>
+                    ))}
                 </select>
+                {errors.nivel && <span>{errors.nivel.message}</span>}
 
-                {
-                    errors.nivel && <span>{errors.nivel.message}</span>
-                }
-
-
-                <label htmlFor="municipio">Municipio donde desea que estudie el alumno:</label>
-                <select 
+                <select
                     {...register("municipio", {
                         validate: (value) => {
-                            return value !== 'seleccionar' || 'Selecciona un municipio'
+                            return value !== 'seleccionar' || 'Selecciona un municipio';
                         }
                     })}
                 >
-                <option value="seleccionar">Seleccionar</option>
-                <option value="saltillo">Saltillo</option>
-                <option value="ramos">Ramos Arizpe</option>
-                <option value="parras">Parras</option>
+                    <option value="seleccionar">Seleccionar</option>
+                    {municipios.map((municipio) => (
+                        <option key={municipio.idMunicipio} value={municipio.idMunicipio}>{municipio.nombre}</option>
+                    ))}
                 </select>
+                {errors.municipio && <span>{errors.municipio.message}</span>}
 
-                {
-                    errors.municipio && <span>{errors.municipio.message}</span>
-                }
-
-                <label htmlFor="asunto">Seleccione el asunto que va a tratar:</label>
-                <select 
+                <select
                     {...register("asunto", {
                         validate: (value) => {
-                            return value !== 'seleccionar' || 'Selecciona un asunto'
+                            return value !== 'seleccionar' || 'Selecciona un asunto';
                         }
                     })}
                 >
-                <option value="seleccionar">Seleccionar</option>
-                <option value="entrega">Entrega de documentos</option>
-                <option value="baja">Baja académica</option>
+                    <option value="seleccionar">Seleccionar</option>
+                    {asuntos.map((asunto) => (
+                        <option key={asunto.idAsunto} value={asunto.idAsunto}>{asunto.descripcion}</option>
+                    ))}
                 </select>
-
-                {
-                    errors.asunto && <span>{errors.asunto.message}</span>
-                }
+                {errors.asunto && <span>{errors.asunto.message}</span>}
 
                 <button type="submit" className="btn-submit">Generar Turno</button>
             </form>
