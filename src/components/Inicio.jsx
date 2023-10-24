@@ -36,6 +36,11 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
                 Dashboard
           </Link>
           )}
+          {isLoggedIn && isAdmin && (
+          <Link to="/dashboard-total" className="large-button">
+                 Grafica Total
+          </Link>
+          )}
         </div>
       </div>
     </div>

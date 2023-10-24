@@ -22,6 +22,13 @@ export const registerTurno = data => fetch(`${API}/agregar`, {
       "Content-Type": "application/json"
     }
   });
+
+  export const listSolicitudes = () => fetch(`${API}/statusTotal`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
   
   // Buscar un turno por ID
   export const findTurno = (idTurno) => fetch(`${API}/buscar/${idTurno}`, {
