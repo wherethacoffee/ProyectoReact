@@ -6,27 +6,32 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
-  const recaptchaRef = React.createRef();
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+
+  const handleCaptchaChange = (value) => {
+    console.log('Captcha value:', value);
+    // Verifica el valor del captcha aquí (puedes implementar tu lógica de verificación aquí)
+    // Por ejemplo, puedes enviar el valor del captcha a tu servidor para su verificación
+    setIsCaptchaVerified(true); // Simulación de verificación del captcha para propósitos de demostración
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Verifica el captcha aquí (puedes implementar tu lógica de verificación aquí)
-    setIsCaptchaVerified(true); // Simulación de verificación del captcha para propósitos de demostración
-
-    // Simulación de verificación del usuario como administrador
-    // Cambia esta lógica según tu sistema de autenticación
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    if (isCaptchaVerified && username === 'admin' && password === 'admin') {
-      // Si el captcha es correcto y las credenciales son de un administrador, redirige a la página de inicio
-      onLogin(username, password); // Llama a la función onLogin para actualizar el estado de isLoggedIn y isAdmin
+    if (!isCaptchaVerified) {
+      setErrorMessage('Favor de completar el captcha.'); // Establece el mensaje de error si el captcha no está verificado
+      return; // Evita continuar con el proceso de inicio de sesión si el captcha no está verificado
+    }
+
+    if (username === 'admin' && password === 'admin') {
+      onLogin(username, password);
       navigate('/');
     } else {
-      // Lógica para mostrar mensajes de error o manejar el acceso no autorizado
-      console.log('Acceso no autorizado');
+      setErrorMessage('Credenciales incorrectas.'); // Establece el mensaje de error si las credenciales son incorrectas
     }
   };
 
@@ -52,12 +57,12 @@ const Login = ({ onLogin }) => {
           </div>
           <div className="form-group">
             <ReCAPTCHA
-              sitekey="6Legf70oAAAAAO6RUj038AiJITYbnKr0vCVwZnig"
-              size="invisible"
-              ref={recaptchaRef}
+              sitekey="6LcF6cgoAAAAAOAwgY6TiWQPxfVD_DZ40yNH7Ss_"
+              onChange={handleCaptchaChange}
               className="g-recaptcha"
             />
           </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" className="login-button">
             Acceder
           </button>

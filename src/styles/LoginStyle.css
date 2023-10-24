@@ -79,4 +79,7 @@ body {
 
 }
 
-
+.error-message {
+  color: red; /* Establece el color del texto de error a rojo */
+  margin-top: 10px;
+}
