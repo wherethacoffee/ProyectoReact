@@ -1,4 +1,4 @@
-const API = 'https://localhost:3000/alumno'
+const API = 'https://apiticketturno-production.up.railway.app/alumno'
 
 export const registerAlumno = data => fetch(`${API}/agregar`, { 
     method: "POST",

@@ -3,11 +3,11 @@ const API = 'https://apiticketturno-production.up.railway.app/turno'
 export const registerTurno = data => fetch(`${API}/agregar`, { 
     method: "POST",
     body: JSON.stringify({
-        "id_representante": data.nombre_realiza_tramite,
-        "id_municipio": data.municipio,
-        "id_status": 1,
-        "id_asunto": data.asunto,
-        "id_nivel": data.nivel,
+        "idRep": data.nombre_realiza_tramite,
+        "idMunicipio": data.municipio,
+        "idStatus": 1,
+        "idAsunto": data.asunto,
+        "idNivel": data.nivel,
         "curp_alumno": data.curp
       }),
     headers: {
@@ -42,17 +42,18 @@ export const registerTurno = data => fetch(`${API}/agregar`, {
   export const updateTurno = (idTurno, data) => fetch(`${API}/actualizar/${idTurno}`, {
     method: "PUT",
     body: JSON.stringify({
-      "id_representante": data.nombre_realiza_tramite,
-      "id_municipio": data.municipio,
-      "id_status": 1,
-      "id_asunto": data.asunto,
-      "id_nivel": data.nivel,
+      "idRep": data.idRep,  // Asegúrate de que estás utilizando el ID del representante
+      "idMunicipio": data.idMunicipio,
+      "idAsunto": data.idAsunto,
+      "idNivel": data.idNivel,
       "curp_alumno": data.curp
     }),
     headers: {
       "Content-Type": "application/json"
     }
-  });
+  }
+  
+  );
   
   // Eliminar un turno por ID
   export const deleteTurno = (idTurno) => fetch(`${API}/eliminar/${idTurno}`, {
@@ -62,4 +63,9 @@ export const registerTurno = data => fetch(`${API}/agregar`, {
     }
   });
 
-  
+  export const switchTurnoStatus = (idTurno) => fetch(`${API}/cambiarStatus/${idTurno}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
