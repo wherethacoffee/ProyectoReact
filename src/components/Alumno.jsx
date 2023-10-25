@@ -5,9 +5,10 @@ import '../styles/AlumnoStyle.css'; // Asegúrate de tener un archivo CSS para l
 import { listEstado } from '../services/estado.services';
 import { listMunicipiosByIdEstado } from '../services/municipio.services';
 import { registerAlumno } from '../services/alumno.services';
-import { registerRepresentante } from '../services/representante.services';
+import { registerRepresentante, listRepresentante } from '../services/representante.services';
 import { listNivel } from '../services/nivel.services';
 import { listAsunto } from '../services/asunto.services'
+import { registerTurno } from '../services/turno.services';
 
 const Alumno = () => {
   const navigate = useNavigate();
@@ -33,7 +34,30 @@ const Alumno = () => {
   const [asuntos, setAsuntos] = useState([]);
   const [niveles, setNiveles] = useState([]);
 
-  
+  const getRepresentanteId = async (nombre) => {
+    try {
+        // Obtener la lista de representantes
+        const response = await listRepresentante();
+        const representantes = await response.json();
+
+        // Buscar el representante por nombre
+        const representanteEncontrado = representantes.find(rep => rep.nombre === nombre);
+
+        if (representanteEncontrado) {
+            return representanteEncontrado;
+
+        } else {
+            console.error('Representante no encontrado');
+            // Puedes manejar el caso en que el representante no se encuentre
+            // Puedes lanzar un error, devolver un valor predeterminado, etc.
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al obtener el representante', error);
+        // Puedes manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
+        throw error;
+    }
+};
 
   const handleInputChange = (form, field, value) => {
     setFormData({
@@ -147,11 +171,32 @@ const Alumno = () => {
     handleNext();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Función para manejar el envío del formulario
+    const idRep = await getRepresentanteId(formData.representante.nombre);
+   
+    if (!idRep) {
+      throw new Error('No se encontró un representante con ese nombre.');
+  }
+
     const isValid = validateStep();
     if (isValid) {
-      console.log('Datos enviados:', formData);
+      const data = {
+        nombre_realiza_tramite: idRep.idRep,
+        curp_alumno: formData.alumno.curp,
+        municipio: formData.estadoMunicipio.municipio,
+        nivel: formData.nivel.descripcion,
+        asunto: formData.asunto.descripcion
+  
+      }
+      try {
+        console.log(data);
+        await registerTurno(data);
+        console.log('Datos enviados:', formData);
+      } catch (error) {
+        console.error('Error al registrar turno:', error);
+        // Aquí puedes manejar el error de alguna manera, mostrar un mensaje al usuario, etc.
+      }
     }
     navigate('/')
   };
