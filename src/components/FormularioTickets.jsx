@@ -199,6 +199,10 @@ const RegistroTickets = () => {
         }
     };
 
+    const update = () => {
+
+    }
+
     return (
         <div className="container">
             <h1>Ticket de turno</h1>
@@ -406,6 +410,7 @@ const RegistroTickets = () => {
                 {errors.asunto && <span>{errors.asunto.message}</span>}
 
                 <button type="submit" className="btn-submit-ticket">Generar Turno</button>
+                <button onClick={update}className="btn-update-ticket">Actualizar Turno</button>
             </form>
         </div>
     );
