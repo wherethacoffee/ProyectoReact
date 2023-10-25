@@ -43,7 +43,7 @@ export const registerAlumno = data => fetch(`${API}/agregar`, {
   });
   
   // Eliminar un admin por ID
-  export const deleteAlumno = (idAlumno) => fetch(`${API}/eliminar/${idAlumno}`, {
+  export const deleteAlumno = (curp) => fetch(`${API}/eliminar/${curp}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json"

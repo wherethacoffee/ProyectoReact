@@ -131,3 +131,24 @@
     background-color: #d93232;
   }
   
+  /* TablaEstilos.css */
+
+  .mi-tabla-estilizada {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .mi-tabla-estilizada th,
+  .mi-tabla-estilizada td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .mi-tabla-estilizada th {
+    background-color: #ff4646;
+  }
+  
+
+  
