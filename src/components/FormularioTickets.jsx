@@ -3,76 +3,200 @@ import { useForm, Controller } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import '../styles/FormStyle.css';
 import { registerTurno } from '../services/turno.services'
-import { listMunicipio } from '../services/municipio.services';
-import { listNivel } from '../services/nivel.services';
+import { listMunicipio, findMunicipio } from '../services/municipio.services';
+import { listNivel, findNivel } from '../services/nivel.services';
 import { useState, useEffect } from 'react';
-import { listAsunto } from '../services/asunto.services';
+import { listAsunto, findAsunto } from '../services/asunto.services';
+import { listRepresentante } from '../services/representante.services';
+import { listAlumno } from '../services/alumno.services';
 
 
 const RegistroTickets = () => {
 
-    const { handleSubmit, register, formState: { errors } } = useForm();
+    const { handleSubmit, register, formState: { errors, isValid }, control } = useForm();
 
-        const [niveles, setNiveles] = useState([]);
-        const [municipios, setMunicipios] = useState([]);
-        const [asuntos, setAsuntos] = useState([]);
+    const [niveles, setNiveles] = useState([]);
+    const [municipios, setMunicipios] = useState([]);
+    const [asuntos, setAsuntos] = useState([]);
 
-        // Resto del código...
-        useEffect(() => {
-            // Cargar datos para el select de Nivel
-            const fetchNiveles = async () => {
-                try {
-                    const response = await listNivel();
-                    const nivelesData = await response.json();
-                    setNiveles(nivelesData);
-                } catch (error) {
-                    console.error('Error al obtener los niveles', error);
-                }
-            };
-            // Cargar datos para el select de Municipio usando la función listMunicipio
-            const fetchMunicipios = async () => {
-                try {
-                    const response = await listMunicipio();
-                    const municipiosData = await response.json();
-                    setMunicipios(municipiosData);
-                } catch (error) {
-                    console.error('Error al obtener municipios', error);
-                }
-            };
+    // Resto del código...
+    useEffect(() => {
+        // Cargar datos para el select de Nivel
+        const fetchNiveles = async () => {
+            try {
+                const response = await listNivel();
+                const nivelesData = await response.json();
+                setNiveles(nivelesData);
+            } catch (error) {
+                console.error('Error al obtener los niveles', error);
+            }
+        };
+        // Cargar datos para el select de Municipio usando la función listMunicipio
+        const fetchMunicipios = async () => {
+            try {
+                const response = await listMunicipio();
+                const municipiosData = await response.json();
+                setMunicipios(municipiosData);
+            } catch (error) {
+                console.error('Error al obtener municipios', error);
+            }
+        };
 
 
-            // Cargar datos para el select de Asunto
-            const fetchAsuntos = async () => {
-                try {
-                    const response = await listAsunto();
-                    const asuntosData = await response.json();
-                    setAsuntos(asuntosData);
-                } catch (error) {
-                    console.error('Error al obtener asuntos', error);
-                }
-            };
+        // Cargar datos para el select de Asunto
+        const fetchAsuntos = async () => {
+            try {
+                const response = await listAsunto();
+                const asuntosData = await response.json();
+                setAsuntos(asuntosData);
+            } catch (error) {
+                console.error('Error al obtener asuntos', error);
+            }
+        };
 
-            // Llama a la función para cargar los municipios
-            fetchMunicipios();
-            fetchNiveles();
-            fetchAsuntos();
-        }, []);
+        // Llama a la función para cargar los municipios
+        fetchMunicipios();
+        fetchNiveles();
+        fetchAsuntos();
+    }, []);
 
-    
+    const getRepresentanteId = async (nombre) => {
+        try {
+            // Obtener la lista de representantes
+            const response = await listRepresentante();
+            const representantes = await response.json();
+
+            // Buscar el representante por nombre
+            const representanteEncontrado = representantes.find(rep => rep.nombre === nombre);
+
+            if (representanteEncontrado) {
+                return representanteEncontrado;
+
+            } else {
+                console.error('Representante no encontrado');
+                // Puedes manejar el caso en que el representante no se encuentre
+                // Puedes lanzar un error, devolver un valor predeterminado, etc.
+                return null;
+            }
+        } catch (error) {
+            console.error('Error al obtener el representante', error);
+            // Puedes manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
+            throw error;
+        }
+    };
+
+    const getAlumnoCurp = async (curp) => {
+        try {
+            // Obtener la lista de representantes
+            const responseAlumno = await listAlumno();
+            const alumnos = await responseAlumno.json();
+
+            // Buscar el representante por nombre
+            const alumnoEncontrado = alumnos.find(alumno => alumno.curp === curp);
+
+            if (alumnoEncontrado) {
+                return alumnoEncontrado;
+
+            } else {
+                console.error('Alumno no encontrado');
+                // Puedes manejar el caso en que el representante no se encuentre
+                // Puedes lanzar un error, devolver un valor predeterminado, etc.
+                return null;
+            }
+        } catch (error) {
+            console.error('Error al obtener el alumno', error);
+            // Puedes manejar el error de alguna manera, por ejemplo, mostrando un mensaje al usuario
+            throw error;
+        }
+    };
+
 
     const onSubmit = async (data) => {
-        await registerTurno(data);
-        Swal.fire({
-            icon: 'success',
-            title: 'Alumno registrado',
-            html: `
-                <p>Datos del alumno</p>
-                <p><strong>CURP:</strong> ${data.curp}</p>
-                <p><strong>Nivel:</strong> ${data.nivel}</p>
-                <p><strong>Municipio:</strong> ${data.municipio}</p>
-                <p><strong>Asunto:</strong> ${data.asunto}</p>
-            `,
-        });
+        try {
+            // Obtener el ID del representante basado en el nombre
+            const idRep = await getRepresentanteId(data.nombre_realiza_tramite);
+            const curpAlumno = await getAlumnoCurp(data.curp);
+
+            // Verificar que se obtuvo un ID de representante
+            if (!idRep) {
+                throw new Error('No se encontró un representante con ese nombre.');
+            }
+
+            if (idRep.correo !== data.correo) {
+                throw new Error('El correo no coincide con el registrado para el representante.');
+
+            }
+
+            if (idRep.telefono !== data.telefono) {
+                throw new Error('El teléfono no coincide con el registrado para el representante.');
+            }
+
+            if (idRep.celular !== data.celular) {
+                throw new Error('El celular no coincide con el registrado para el representante.');
+            }
+
+            if (!curpAlumno) {
+                throw new Error('No se encontró un alumno con esa curp.');
+            }
+
+            if (curpAlumno.nombre !== data.nombre) {
+                throw new Error('El nombre no coincide con el registrado para el alumno.');
+
+            }
+
+            if (curpAlumno.paterno !== data.paterno) {
+                throw new Error('El apellido paterno no coincide con el registrado para el alumno.');
+            }
+
+            if (curpAlumno.materno !== data.materno) {
+                throw new Error('El apellido materno no coincide con el registrado para el alumno.');
+            }
+
+            data.nombre_realiza_tramite = idRep.idRep;
+
+            // Enviar la solicitud con el objeto body
+            const response = await registerTurno(data);
+            console.log(idRep, data);
+
+            // Verificar si la respuesta contiene un archivo PDF
+            if (response.headers.get('Content-Type') === 'application/pdf') {
+                // Obtener el blob del PDF
+                const blob = await response.blob();
+
+                // Crear un objeto URL del blob
+                const url = window.URL.createObjectURL(blob);
+
+                // Crear un enlace y hacer clic en él para iniciar la descarga
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'turno.pdf';
+                a.click();
+
+                // Limpiar el objeto URL después de la descarga
+                window.URL.revokeObjectURL(url);
+            }
+
+            // Mostrar mensaje de éxito solo si la solicitud se completa con éxito
+            Swal.fire({
+                icon: 'success',
+                title: 'Ticket registrado',
+                html: `
+                        <p>Datos del alumno</p>
+                        <p><strong>CURP:</strong> ${data.curp}</p>
+                        <p><strong>Nombre:</strong> ${curpAlumno.nombre}</p>
+                        <p><strong>Apellidos:</strong> ${curpAlumno.paterno} ${curpAlumno.materno}</p>
+
+                      
+                    `,
+            });
+        } catch (error) {
+            console.error('Error al registrar el turno', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al registrar el turno',
+                text: error.message,
+            });
+        }
     };
 
     return (
@@ -88,8 +212,8 @@ const RegistroTickets = () => {
                             message: "Rellene el campo vacio"
                         },
                         pattern: {
-                            /* value: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+ [A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/,
-                         message: "Digite su nombre completo (primer nombre y primer apellido)"*/
+                            value: /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ]+ [A-Za-záéíóúüñÁÉÍÓÚÜÑ]+$/,
+                            message: "Digite su nombre completo (primer nombre y primer apellido)"
                         },
                     })}
                 />
@@ -235,7 +359,8 @@ const RegistroTickets = () => {
                 {
                     errors.correo && <span>{errors.correo.message}</span>
                 }
-            
+
+                <label htmlFor="nivel">Nivel:</label>
                 <select
                     {...register("nivel", {
                         validate: (value) => {
@@ -250,6 +375,7 @@ const RegistroTickets = () => {
                 </select>
                 {errors.nivel && <span>{errors.nivel.message}</span>}
 
+                <label htmlFor="municipio">Municipio:</label>
                 <select
                     {...register("municipio", {
                         validate: (value) => {
@@ -264,6 +390,7 @@ const RegistroTickets = () => {
                 </select>
                 {errors.municipio && <span>{errors.municipio.message}</span>}
 
+                <label htmlFor="asunto">Asunto:</label>
                 <select
                     {...register("asunto", {
                         validate: (value) => {
