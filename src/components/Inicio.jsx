@@ -22,9 +22,12 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
         )}
       </header>
       <div className="content">
-        <div className="button-container">
+        <div className="button-container-vertical">
           <Link to="/crear-ticket" className="large-button">
             Crear Ticket
+          </Link>
+          <Link to="/alumno" className="large-button">
+            Nuevo ingreso
           </Link>
           {isLoggedIn && isAdmin && (
           <Link to="/tickets-admin" className="large-button">
@@ -33,12 +36,12 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
           )}
           {isLoggedIn && isAdmin && (
           <Link to="/dashboard" className="large-button">
-                Dashboard
+                Dashboard Municipios
           </Link>
           )}
           {isLoggedIn && isAdmin && (
           <Link to="/dashboard-total" className="large-button">
-                 Grafica Total
+                 Dashboard
           </Link>
           )}
           {isLoggedIn && isAdmin && (
