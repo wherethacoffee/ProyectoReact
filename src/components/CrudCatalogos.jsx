@@ -398,7 +398,7 @@ const CrudComponent = () => {
   return (
     <div className="crud-container">
       <h1>Editor para Administradores</h1>
-      <div className="button-container">
+      <div className="container-crud">
         <button onClick={() => handleButtonClick('alumno')}>Alumno</button>
         <button onClick={() => handleButtonClick('representante')}>Representante</button>
         <button onClick={() => handleButtonClick('asunto')}>Asunto</button>
