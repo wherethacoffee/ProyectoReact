@@ -413,9 +413,6 @@ const RegistroTickets = () => {
           <button type="submit" className="btn-submit-ticket">
             Generar Turno
           </button>
-          <button onClick={update} className="btn-update-ticket">
-            Actualizar Turno
-          </button>
         </div>
       </form>
     </div>
