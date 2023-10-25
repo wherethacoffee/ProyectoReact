@@ -48,7 +48,7 @@
     display: block;
   }
   
-  .btn-submit {
+  .btn-submit-ticket {
     background-color: #ff4646;
     color: #ffffff;
     border: none;
@@ -58,7 +58,7 @@
     transition: background-color 0.3s ease;
   }
   
-  .btn-submit:hover {
+  .btn-submit-ticket:hover {
     background-color: #d93232;
   }
       

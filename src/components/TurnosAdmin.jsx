@@ -175,8 +175,9 @@ const TurnoAdminComponent = () => {
 
 
   return (
-    <div className="container" id="turno-container">
+    <div className="container-tickets" id="turno-container">
       {/* Componente para la búsqueda por CURP o nombre */}
+      <div className="main-content">
       <div className="search-container">
         <input
           type="text"
@@ -187,50 +188,49 @@ const TurnoAdminComponent = () => {
         <button onClick={handleSearch}>Buscar</button>
       </div>
 
-            {/* Lista de turnos */}
-            <ul className="turno-list">
-                {turnos.map((turno) => {
-                    try {
-                        return (
-                            <li key={turno.idTurno} onClick={() => setSelectedTurno(turno)}>
-                                {turno.nTurno} - {turno.Municipio.nombre} - {turno.Alumno.curp} - {turno.Representante.nombre} - {turno.Status.descripcion}
-                            </li>
-                        );
-                    } catch (error) {
-                        console.error('Error al renderizar un elemento de la lista de turnos:', error);
-                        // Puedes manejar el error de alguna manera, como mostrar un mensaje alternativo
-                        return (
-                            <li key={turno.idTurno} onClick={() => setSelectedTurno(turno)}>
-                                Turno no encontrado
-                            </li>
-                        );
-                    }
-                })}
-            </ul>
-
-            {/* Detalles y acciones para el turno seleccionado */}
-            {selectedTurno && (
+{/* Lista de turnos */}
+<ul className="turno-list">
+    {turnos.map((turno) => {
+        try {
+            return (
+                <li key={turno.idTurno} onClick={() => setSelectedTurno(turno)}>
+                    {turno.nTurno} - {turno.Municipio.nombre} - {turno.Alumno.curp} - {turno.Representante.nombre} - {turno.Status.descripcion}
+                    
+                    {/* Detalles y acciones para el turno seleccionado */}
+                    {selectedTurno && selectedTurno.idTurno === turno.idTurno && (
                         <div className="details-container">
-                    <h2>Detalles del Turno</h2>
-                    <p>ID: {selectedTurno.idTurno}</p>
-                    <p>Nombre del Representante: {selectedTurno.Representante.nombre}</p>
-                    <p>CURP del Alumno: {selectedTurno.Alumno.curp}</p>
-                    <p>Municipio: {selectedTurno.Municipio.nombre}</p>
-                    <p>Asunto: {selectedTurno.Asunto.descripcion}</p>
-                    <p>Nivel: {selectedTurno.Nivel.descripcion}</p>
-                    <p>Status: {selectedTurno.Status.descripcion}</p>
+                            <h2>Detalles del Turno</h2>
+                            <p>ID: {selectedTurno.idTurno}</p>
+                            <p>Nombre del Representante: {selectedTurno.Representante.nombre}</p>
+                            <p>CURP del Alumno: {selectedTurno.Alumno.curp}</p>
+                            <p>Municipio: {selectedTurno.Municipio.nombre}</p>
+                            <p>Asunto: {selectedTurno.Asunto.descripcion}</p>
+                            <p>Nivel: {selectedTurno.Nivel.descripcion}</p>
+                            <p>Status: {turno.Status.descripcion}</p>
 
-                    {/* Acciones */}
-                    <div className="actions-container">
-                    <button onClick={() => handleEdit(selectedTurno)}>Editar</button>
+                            {/* Acciones */}
+                            <div className="actions-container">
+                                <button onClick={() => handleEdit(selectedTurno)}>Editar</button>
+                                <button onClick={handleDelete}>Eliminar</button>
+                                {/* Cambiar el estado del turno */}
+                                <button onClick={() => handleStatusChange()}>Cambiar status</button>
+                            </div>
+                        </div>
+                    )}
+                </li>
+            );
+        } catch (error) {
+            console.error('Error al renderizar un elemento de la lista de turnos:', error);
+            // Puedes manejar el error de alguna manera, como mostrar un mensaje alternativo
+            return (
+                <li key={turno.idTurno} onClick={() => setSelectedTurno(turno)}>
+                    Turno no encontrado
+                </li>
+            );
+        }
+    })}
+</ul>
 
-                    <button onClick={handleDelete}>Eliminar</button>
-
-                    {/* Cambiar el estado del turno */}
-                        <button onClick={() => handleStatusChange()}>Cambiar status</button>
-                    </div>
-                </div>
-            )}
 
 
             {selectedTurno && (
@@ -327,12 +327,14 @@ const TurnoAdminComponent = () => {
             )}
 
 
-
+</div>
             {/* Formulario para registrar un nuevo turno */}
-            <div>
+            <div className="form-container">
+                <div>
                 <h2>Registrar Nuevo Turno</h2>
-                {/* Implementa el formulario para recopilar la información del nuevo turno */}
-                {/* y llama a la función handleRegister al hacer clic en un botón */}
+                </div>
+                 {/* Implementa el formulario para recopilar la información del nuevo turno */}
+                    {/* y llama a la función handleRegister al hacer clic en un botón */}
                 <RegistroTickets></RegistroTickets>
             </div>
         </div>

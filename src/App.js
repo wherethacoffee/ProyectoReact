@@ -113,6 +113,15 @@ function App() {
             />
           }
         />
+        <Route
+          path = "/crud-catalogos"
+          element ={<CrudComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+        />
+        <Route
+          path = "/alumno"
+          element ={<Alumno isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+        />
+        {/* Otras rutas */}
       </Routes>
     </Router>
   );

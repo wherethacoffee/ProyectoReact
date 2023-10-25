@@ -37,8 +37,7 @@ body {
   font-size: 24px;
 }
 
-.small-button,
-.large-button {
+.small-button{
   background-color: #ff4646;
   color: #ffffff;
   border: none;
@@ -49,6 +48,21 @@ body {
   text-decoration: none;
   margin: 10px;
   text-align: center;
+}
+
+.large-button {
+  width: 200px; /* Establece el ancho fijo para los botones, ajusta según sea necesario */
+  height: 50px; /* Establece la altura fija para los botones, ajusta según sea necesario */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d93232; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  text-decoration: none; /* Elimina el subrayado del enlace */
+  margin-bottom: 10px; /* Espaciado entre los botones */
+  border: none; /* Elimina el borde del botón */
+  border-radius: 5px; /* Borde redondeado del botón */
+  font-size: 16px; /* Tamaño de la fuente del texto del botón */
 }
 
 .small-button:hover,
@@ -71,4 +85,27 @@ body {
 /* Estilos específicos para el botón "Modificar Tickets" */
 .large-button:last-of-type {
   margin-bottom: 20px;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.progress-bar-step {
+  flex: 1;
+  height: 10px;
+  background-color: #ddd; /* Color de fondo de la barra de progreso inactiva */
+}
+
+.progress-bar-step.active {
+  background-color: #ff4646; /* Color de fondo de la barra de progreso activa */
+}
+
+.button-container-vertical {
+  display: flex;
+  flex-direction: column; /* Esto hará que los elementos se muestren en una columna en lugar de una fila */
+  align-items: center; /* Esto centrará los elementos horizontalmente en el contenedor */
 }
