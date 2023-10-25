@@ -1,17 +1,17 @@
-import React from 'react';
-import logo from '../images/logo.jpg';
-import '../styles/InicioStyle.css';
-import { Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import Modal from './Modal';
-import { useState } from 'react';
+import React from "react";
+import logo from "../images/logo.jpg";
+import "../styles/InicioStyle.css";
+import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import Modal from "./Modal";
+import { useState } from "react";
 
 const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
-  const [cookies, setCookie] = useCookies(['cookieName']);
+  const [cookies, setCookie] = useCookies(["cookieName"]);
   const [showModal, setShowModal] = useState(!cookies.cookieName);
 
   const handleCloseModal = () => {
-    setCookie('cookieName', true, { path: '/' });
+    setCookie("cookieName", true, { path: "/" });
     setShowModal(false);
   };
 
@@ -41,26 +41,26 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
             Nuevo ingreso
           </Link>
           {isLoggedIn && isAdmin && (
-          <Link to="/crud-catalogos" className="large-button">
-                 Modificar Catalogos
-          </Link>
+            <Link to="/crud-catalogos" className="large-button">
+              Modificar Catalogos
+            </Link>
           )}
           {isLoggedIn && isAdmin && (
-          <Link to="/tickets-admin" className="large-button">
-                Modificar Tickets
-          </Link>
+            <Link to="/tickets-admin" className="large-button">
+              Modificar Tickets
+            </Link>
           )}
           {isLoggedIn && isAdmin && (
-          <Link to="/dashboard" className="large-button">
-                Dashboard Municipios
-          </Link>
+            <Link to="/dashboard" className="large-button">
+              Dashboard Municipios
+            </Link>
           )}
           {isLoggedIn && isAdmin && (
-          <Link to="/dashboard-total" className="large-button">
-                 Dashboard
-          </Link>
+            <Link to="/dashboard-total" className="large-button">
+              Dashboard
+            </Link>
           )}
-           {showModal && <Modal onClose={handleCloseModal} />}
+          {showModal && <Modal onClose={handleCloseModal} />}
         </div>
       </div>
     </div>

@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import '../styles/CrearUsuarioStyle.css';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { registerAdmin } from '../services/admin.services';
+import React, { useState } from "react";
+import "../styles/CrearUsuarioStyle.css";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { registerAdmin } from "../services/admin.services";
 
 const CrearUsuario = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -17,18 +22,18 @@ const CrearUsuario = () => {
         username: data.usuario,
         password: data.password,
       });
-  
-      if (response.ok) {                                                        
+
+      if (response.ok) {
         // Si la respuesta es exitosa, muestra una alerta y redirige a la página de inicio
-        window.alert('Usuario creado correctamente');                                                                 
-        navigate('/');
+        window.alert("Usuario creado correctamente");
+        navigate("/");
       } else {
         // Si la respuesta no es exitosa, maneja el error según tus necesidades
-        console.error('Error al crear el usuario:', response.statusText);
+        console.error("Error al crear el usuario:", response.statusText);
       }
     } catch (error) {
       // Maneja errores de red u otros errores
-      console.error('Error al crear el usuario:', error);
+      console.error("Error al crear el usuario:", error);
     }
   };
 
@@ -106,10 +111,14 @@ const CrearUsuario = () => {
               {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
             </button>
           </div>
-          {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+          {errors.confirmPassword && (
+            <span>{errors.confirmPassword.message}</span>
+          )}
         </div>
         {/* ... (otros campos del formulario) ... */}
-        <button type="submit" className="btn-submit">Crear Usuario</button>
+        <button type="submit" className="btn-submit">
+          Crear Usuario
+        </button>
       </form>
     </div>
   );

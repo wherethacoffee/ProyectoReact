@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import { listSolicitudes } from '../services/turno.services';
-import Chart from 'chart.js/auto';
-import '../styles/DashboardStyle.css';
+import React, { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
+import { listSolicitudes } from "../services/turno.services";
+import Chart from "chart.js/auto";
+import "../styles/DashboardStyle.css";
 
 const Dashboard_total = () => {
-  const [solicitudesData, setSolicitudesData] = useState({ pendiente: 0, realizado: 0 });
+  const [solicitudesData, setSolicitudesData] = useState({
+    pendiente: 0,
+    realizado: 0,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await listSolicitudes();
         const data = await response.json();
-        setSolicitudesData({ pendiente: parseInt(data.pendiente), realizado: parseInt(data.realizado) });
+        setSolicitudesData({
+          pendiente: parseInt(data.pendiente),
+          realizado: parseInt(data.realizado),
+        });
       } catch (error) {
-        console.error('Error al obtener datos de solicitudes:', error);
+        console.error("Error al obtener datos de solicitudes:", error);
       }
     };
 
@@ -22,12 +28,12 @@ const Dashboard_total = () => {
   }, []); // Este efecto se ejecuta una vez al cargar el componente
 
   const chartData = {
-    labels: ['Pendientes', 'Realizadas'],
+    labels: ["Pendientes", "Realizadas"],
     datasets: [
       {
-        label: 'Total de Solicitudes',
+        label: "Total de Solicitudes",
         data: [solicitudesData.pendiente, solicitudesData.realizado],
-        backgroundColor: ['#FF5733', '#33FF49'], // Colores para las barras
+        backgroundColor: ["#FF5733", "#33FF49"], // Colores para las barras
       },
     ],
   };
