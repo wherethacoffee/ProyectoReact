@@ -9,7 +9,6 @@ import TurnoAdminComponent  from './components/TurnosAdmin'
 import Dashboards from './components/Dashboard';
 import Dashboard_total from './components/Dashboard_total';
 import CrudComponent from './components/CrudCatalogos';
-import Listar from './components/Listar';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -78,10 +77,6 @@ function App() {
         <Route
           path = "/crud-catalogos"
           element ={<CrudComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
-        />
-        <Route
-          path = "/listar"
-          element ={<Listar isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
         />
         {/* Otras rutas */}
       </Routes>
