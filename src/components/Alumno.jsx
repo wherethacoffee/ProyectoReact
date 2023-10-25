@@ -1,23 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import '../styles/AlumnoStyle.css'; // Asegúrate de tener un archivo CSS para los estilos
+import { listEstado } from '../services/estado.services';
+import { listMunicipiosByIdEstado } from '../services/municipio.services';
+import { registerAlumno } from '../services/alumno.services';
+import { registerRepresentante } from '../services/representante.services';
+import { listNivel } from '../services/nivel.services';
+import { listAsunto } from '../services/asunto.services'
 
 const Alumno = () => {
-  const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     // Inicializa el estado del formulario
     alumno: { curp: '', nombre: '', paterno: '', materno: '' },
     representante: { nombre: '', celular: '', telefono: '', correo: '' },
     estadoMunicipio: { estado: '', municipio: '' },
+    asunto: { descripcion: false }, nivel: { descripcion: false }
   });
 
   const [errors, setErrors] = useState({
     alumno: { curp: false,nombre: false, paterno: false, materno: false },
     representante: { nombre: false, celular: false, telefono: false, correo: false },
     estadoMunicipio: { estado: false, municipio: false },
+    asunto: { descripcion: false}, nivel: { descripcion: false}
   });
 
+  const [step, setStep] = useState(1);
+  const [estados, setEstados] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
+  const [asuntos, setAsuntos] = useState([]);
+  const [niveles, setNiveles] = useState([]);
+
+  
+
   const handleInputChange = (form, field, value) => {
-    // Función para manejar cambios en los campos de entrada
     setFormData({
       ...formData,
       [form]: {
@@ -32,6 +50,10 @@ const Alumno = () => {
     const newErrors = { ...errors };
 
     if (step === 1) {
+      if (!formData.alumno.curp || !/^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/.test(formData.alumno.curp)) {
+        valid = false;
+        newErrors.alumno.curp = true;
+      }
       if (!formData.alumno.nombre || !formData.alumno.paterno || !formData.alumno.materno) {
         valid = false;
         newErrors.alumno.nombre = !formData.alumno.nombre;
@@ -40,12 +62,13 @@ const Alumno = () => {
         newErrors.alumno.curp = !formData.alumno.curp;
       }
     } else if (step === 2) {
-      if (!formData.representante.nombre || !formData.representante.celular || !formData.representante.telefono || !formData.representante.correo) {
+      if (!formData.representante.nombre || !formData.representante.celular || !/^\d{10}$/.test(formData.representante.celular) || !/^\d{10}$/.test(formData.representante.telefono) 
+          || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.representante.correo)) {
         valid = false;
         newErrors.representante.nombre = !formData.representante.nombre;
-        newErrors.representante.celular = !formData.representante.celular;
-        newErrors.representante.telefono = !formData.representante.telefono;
-        newErrors.representante.correo = !formData.representante.correo;
+        newErrors.representante.celular = !/^\d{10}$/.test(formData.representante.celular);
+        newErrors.representante.telefono = !/^\d{10}$/.test(formData.representante.telefono);
+        newErrors.representante.correo = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.representante.correo);
       }
     } else if (step === 3) {
       if (!formData.estadoMunicipio.estado || !formData.estadoMunicipio.municipio) {
@@ -72,15 +95,117 @@ const Alumno = () => {
     }
   };
 
+  const submitAlumno = async () => {
+    const isValid = validateStep();
+    if (isValid) {
+      registerAlumno(formData.alumno)
+      .then((response) => {
+        if (response.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Datos ingresados exitosamente'
+          })
+        } else {
+          throw new Error('Error al insertar datos en la tabla de Alumnos');
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Advertencia',
+          text: 'Los datos no fueron ingresados de manera correcta, vuelva a revisarlos'
+        })
+      });
+    }
+    handleNext();
+  };
+
+  const submitRep = async () => {
+    const isValid = validateStep();
+    if (isValid) {
+      registerRepresentante(formData.representante)
+      .then((response) => {
+        if (response.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Datos ingresados exitosamente'
+          })
+        } else {
+          throw new Error('Error al insertar datos en la tabla de Alumnos');
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Advertencia',
+          text: 'Los datos no fueron ingresados de manera correcta, vuelva a revisarlos'
+        })
+      });
+    }
+    handleNext();
+  };
+
   const handleSubmit = () => {
     // Función para manejar el envío del formulario
     const isValid = validateStep();
     if (isValid) {
-      // Aquí puedes enviar formData a tu API usando fetch o axios
       console.log('Datos enviados:', formData);
-      // Implementa lógica de envío a la API aquí
     }
+    navigate('/')
   };
+
+  useEffect(() => {
+    const fetchEstados = async () => {
+      try {
+        const response = await listEstado();
+        const estadosData = await response.json();
+        setEstados(estadosData);
+      } catch (error) {
+        console.error('Error al obtener estados', error);
+      }
+    };
+  
+    const fetchMunicipios = async (estadoId) => {
+      try {
+        const response = await listMunicipiosByIdEstado(estadoId);
+        const municipiosData = await response.json();
+        setMunicipios(municipiosData);
+      } catch (error) {
+        console.error('Error al obtener municipios', error);
+      }
+    };
+
+    // Cargar datos para el select de Asunto
+    const fetchAsuntos = async () => {
+      try {
+          const response = await listAsunto();
+          const asuntosData = await response.json();
+          setAsuntos(asuntosData);
+      } catch (error) {
+          console.error('Error al obtener asuntos', error);
+      }
+    };
+
+    // Cargar datos para el select de Nivel
+    const fetchNiveles = async () => {
+      try {
+          const response = await listNivel();
+          const nivelesData = await response.json();
+          setNiveles(nivelesData);
+      } catch (error) {
+          console.error('Error al obtener los niveles', error);
+      }
+    };  
+
+    fetchEstados(); 
+    if (formData.estadoMunicipio.estado) {
+      fetchMunicipios(formData.estadoMunicipio.estado);
+    };
+    fetchAsuntos();
+    fetchNiveles();
+  }, [formData.estadoMunicipio.estado]);
 
   return (
     <div className="container">
@@ -102,7 +227,7 @@ const Alumno = () => {
                 onChange={(e) => handleInputChange('alumno', 'curp', e.target.value)}
                 className={errors.alumno.curp ? 'error' : ''}
             />
-            {errors.alumno.curp && <span className="error-message">Este campo es obligatorio</span>}
+            {errors.alumno.curp && <span className="error-message">Ingresa una CURP válida</span>}
             <input
               type="text"
               placeholder="Nombre"
@@ -127,7 +252,7 @@ const Alumno = () => {
               className={errors.alumno.materno ? 'error' : ''}
             />
             {errors.alumno.materno && <span className="error-message">Este campo es obligatorio</span>}
-            <button onClick={handleNext}>Siguiente</button>
+            <button onClick={submitAlumno}>Siguiente</button>
           </div>
         )}
 
@@ -143,23 +268,23 @@ const Alumno = () => {
     />
     {errors.representante.nombre && <span className="error-message">Este campo es obligatorio</span>}
     <input
-      type="text"
+      type="number"
       placeholder="Celular"
       value={formData.representante.celular}
       onChange={(e) => handleInputChange('representante', 'celular', e.target.value)}
       className={errors.representante.celular ? 'error' : ''}
     />
-    {errors.representante.celular && <span className="error-message">Este campo es obligatorio</span>}
+    {errors.representante.celular && <span className="error-message">Ingresa un número de celular válido</span>}
     <input
-      type="text"
+      type="number"
       placeholder="Teléfono"
       value={formData.representante.telefono}
       onChange={(e) => handleInputChange('representante', 'telefono', e.target.value)}
       className={errors.representante.telefono ? 'error' : ''}
     />
-    {errors.representante.telefono && <span className="error-message">Este campo es obligatorio</span>}
+    {errors.representante.telefono && <span className="error-message">Ingresa un número de teléfono válido</span>}
     <input
-      type="text"
+      type="email"
       placeholder="Correo"
       value={formData.representante.correo}
       onChange={(e) => handleInputChange('representante', 'correo', e.target.value)}
@@ -168,42 +293,77 @@ const Alumno = () => {
     {errors.representante.correo && <span className="error-message">Este campo es obligatorio</span>}
     <div className="buttons-container">
         {step > 1 && <button onClick={handlePrevious} className="button-container">Retroceder</button>}
-        {step < 3 && <button onClick={handleNext} className="button-container">Siguiente</button>}
+        {step < 3 && <button onClick={submitRep} className="button-container">Siguiente</button>}
     </div> 
+    {errors.representante.correo && <span className="error-message">Ingresa un correo válido</span>}
   </div>
 )}
 
 {step === 3 && (
   <div className="form">
-    <h2>Estado y Municipio</h2>
-    <select
-      value={formData.estadoMunicipio.estado}
-      onChange={(e) => handleInputChange('estadoMunicipio', 'estado', e.target.value)}
-      className={errors.estadoMunicipio.estado ? 'error' : ''}
-    >
-      <option value="">Selecciona un estado</option>
-      <option value="estado1">Estado 1</option>
-      <option value="estado2">Estado 2</option>
-      <option value="estado3">Estado 3</option>
-      {/* Agrega más opciones según tus necesidades */}
-    </select>
-    {errors.estadoMunicipio.estado && <span className="error-message">Selecciona un estado</span>}
-    <select
-      value={formData.estadoMunicipio.municipio}
-      onChange={(e) => handleInputChange('estadoMunicipio', 'municipio', e.target.value)}
-      className={errors.estadoMunicipio.municipio ? 'error' : ''}
-    >
-      <option value="">Selecciona un municipio</option>
-      {/* Las opciones para municipio se llenarán dinámicamente en función del estado seleccionado en el primer combobox */}
-      {/* Opciones para el combobox de municipio */}
-    </select>
-    {errors.estadoMunicipio.municipio && <span className="error-message">Selecciona un municipio</span>}
-    <div className="buttons-container">
-        {step > 2 && <button onClick={handlePrevious} className="button-container">Retroceder</button>}
-        {step <= 3 && <button onClick={handleSubmit}className='button-container'>Enviar</button>}
-    </div> 
-    
+  <h2>Estado y Municipio</h2>
+  <select
+    value={formData.estadoMunicipio.estado}
+    onChange={(e) => handleInputChange('estadoMunicipio', 'estado', e.target.value)}
+    className={errors.estadoMunicipio.estado ? 'error' : ''}
+  >
+    <option value="">Selecciona un estado</option>
+    {estados.map((estado) => (
+      <option key={estado.idEstado} value={estado.idEstado}>
+        {estado.nombre}
+      </option>
+    ))}
+  </select>
+  {errors.estadoMunicipio.estado && <span className="error-message">Selecciona un estado</span>}
+
+  <select
+    value={formData.estadoMunicipio.municipio}
+    onChange={(e) => handleInputChange('estadoMunicipio', 'municipio', e.target.value)}
+    className={errors.estadoMunicipio.municipio ? 'error' : ''}
+  >
+    <option value="">Selecciona un municipio</option>
+    {municipios.map((municipio) => (
+      <option key={municipio.idMunicipio} value={municipio.idMunicipio}>
+        {municipio.nombre}
+      </option>
+    ))}
+  </select>
+  {errors.estadoMunicipio.municipio && <span className="error-message">Selecciona un municipio</span>}
+
+  <h2>Asunto y Nivel</h2>
+  <select 
+    value={formData.asunto.descripcion}
+    onChange={(e) => handleInputChange('asunto', 'descripcion', e.target.value)}
+    className={errors.asunto.descripcion ? 'error' : ''}
+  >
+    <option value="">Selecciona un asunto</option>
+    {asuntos.map((asunto) => (
+      <option key={asunto.idAsunto} value={asunto.idAsunto}>
+        {asunto.descripcion}
+      </option>
+    ))}
+  </select>
+  {errors.asunto.descripcion && <span className="error-message">Selecciona un asunto</span>}
+
+  <select 
+    value={formData.nivel.descripcion}
+    onChange={(e) => handleInputChange('nivel', 'descripcion', e.target.value)}
+    className={errors.nivel.descripcion ? 'error' : ''}
+  >
+    <option value="">Selecciona un nivel</option>
+    {niveles.map((nivel) => (
+      <option key={nivel.idNivel} value={nivel.idNivel}>
+        {nivel.descripcion}
+      </option>
+    ))}
+  </select>
+  {errors.nivel.descripcion && <span className="error-message">Selecciona un nivel</span>}
+
+  <div className="buttons-container">
+    {step > 2 && <button onClick={handlePrevious} className="button-container">Retroceder</button>}
+    {step <= 4 && <button onClick={handleSubmit}className='button-container'>Enviar</button>}
   </div>
+</div>
 )}
       </div>
     </div>
@@ -211,3 +371,4 @@ const Alumno = () => {
 };
 
 export default Alumno;
+
