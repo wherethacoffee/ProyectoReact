@@ -81,6 +81,11 @@ const Alumno = () => {
       setStep(step + 1);
     }
   };
+  const handlePrevious = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
 
   const handleSubmit = () => {
     // Función para manejar el envío del formulario
@@ -238,6 +243,11 @@ const Alumno = () => {
       onChange={(e) => handleInputChange('representante', 'correo', e.target.value)}
       className={errors.representante.correo ? 'error' : ''}
     />
+    {errors.representante.correo && <span className="error-message">Este campo es obligatorio</span>}
+    <div className="buttons-container">
+        {step > 1 && <button onClick={handlePrevious} className="button-container">Retroceder</button>}
+        {step < 3 && <button onClick={handleNext} className="button-container">Siguiente</button>}
+    </div> 
     {errors.representante.correo && <span className="error-message">Ingresa un correo válido</span>}
     <button onClick={handleNext}>Siguiente</button>
   </div>
@@ -272,7 +282,11 @@ const Alumno = () => {
         ))}
     </select>
     {errors.estadoMunicipio.municipio && <span className="error-message">Selecciona un municipio</span>}
-    <button onClick={handleSubmit}>Enviar</button>
+    <div className="buttons-container">
+        {step > 2 && <button onClick={handlePrevious} className="button-container">Retroceder</button>}
+        {step <= 3 && <button onClick={handleSubmit}className='button-container'>Enviar</button>}
+    </div> 
+    
   </div>
 )}
       </div>

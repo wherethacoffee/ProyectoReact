@@ -411,6 +411,7 @@ const CrudComponent = () => {
         <form className="form-container-crud" onSubmit={(e) => handleFormSubmit(e)}>
           {selectedForm === 'alumno' && (
             <>
+            <h3>El campo de "CURP" es obligatorio para editar y eliminar</h3>
               <label htmlFor="curp">CURP:</label>
               <input
                 type="text"
@@ -459,6 +460,7 @@ const CrudComponent = () => {
             )}
         {selectedForm === 'representante' && (
         <div className="form-container-crud">
+          <h3>El campo de "ID" solo es necesario para editar y eliminar</h3>
           <label htmlFor="id">ID:</label>
           <input type="text" id="idRep" name="idRep" value={formData.idRep || ''}
           onChange={(e) => setFormData({ ...formData, idRep: e.target.value })}/>
@@ -499,6 +501,8 @@ const CrudComponent = () => {
 
       {selectedForm === 'asunto' && (
         <div className="form-container-crud">
+          <h3>El campo de "ID" solo es necesario para editar y eliminar</h3>
+
           <label htmlFor="id">ID:</label>
           <input type="text" id="idAsunto" name="idAsunto" value={formData.idAsunto || ''}
           onChange={(e) => setFormData({ ...formData, idAsunto: e.target.value })}/>
@@ -521,6 +525,7 @@ const CrudComponent = () => {
 
       {selectedForm === 'nivel' && (
         <div className="form-container-crud">
+          <h3>El campo de "ID" solo es necesario para editar y eliminar</h3>
           <label htmlFor="id">ID:</label>
           <input type="text" id="idNivel" name="idNivel" value={formData.idNivel || ''}
           onChange={(e) => setFormData({ ...formData, idNivel: e.target.value })}/>
@@ -542,6 +547,7 @@ const CrudComponent = () => {
 
       {selectedForm === 'estado' && (
         <div className="form-container-crud">
+          <h3>El campo de "ID" solo es necesario para editar y eliminar</h3>
           <label htmlFor="id">ID:</label>
           <input type="text" id="idEstado" name="idEstado" value={formData.idEstado || ''}
           onChange={(e) => setFormData({ ...formData, idEstado: e.target.value })}/>
@@ -564,6 +570,7 @@ const CrudComponent = () => {
 
       {selectedForm === 'municipio' && (
         <div className="form-container-crud">
+          <h3>El campo de "ID" solo es necesario para editar y eliminar</h3>
           <label htmlFor="id">ID:</label>
           <input type="text" id="idMunicipio" name="idMunicipio" value={formData.idMunicipio || ''}
           onChange={(e) => setFormData({ ...formData, idMunicipio: e.target.value })}/>
@@ -594,6 +601,7 @@ const CrudComponent = () => {
 
       {selectedForm === 'admin' && (
         <div className="form-container-crud">
+          <h3>El campo de "ID" solo es necesario para editar y eliminar</h3>
           <label htmlFor="id">ID:</label>
           <input type="text" id="idAdmin" name="idAdmin" value={formData.idAdmin || ''}
           onChange={(e) => setFormData({ ...formData, idAdmin: e.target.value })}/>

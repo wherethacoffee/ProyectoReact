@@ -122,6 +122,18 @@ function App() {
             />
           }
         />
+        <Route
+          path = "/alumno"
+          element ={
+            <ProtectedRoute 
+              element={
+                <Alumno isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
+        />
       </Routes>
     </Router>
   );

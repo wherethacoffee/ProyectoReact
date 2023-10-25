@@ -30,6 +30,11 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
             Nuevo ingreso
           </Link>
           {isLoggedIn && isAdmin && (
+          <Link to="/crud-catalogos" className="large-button">
+                 Modificar Catalogos
+          </Link>
+          )}
+          {isLoggedIn && isAdmin && (
           <Link to="/tickets-admin" className="large-button">
                 Modificar Tickets
           </Link>
@@ -44,11 +49,7 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
                  Dashboard
           </Link>
           )}
-          {isLoggedIn && isAdmin && (
-          <Link to="/crud-catalogos" className="large-button">
-                 Modificar Catalogos
-          </Link>
-          )}
+
         </div>
       </div>
     </div>
