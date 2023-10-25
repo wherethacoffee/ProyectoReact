@@ -46,4 +46,31 @@ body {
   button:hover {
     background-color: #d93232;
   }
+
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    /* Asegúrate de que no haya márgenes o padding en este contenedor */
+  }
+  
+  .button-container {
+    background-color: #ff4646;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Agrega márgenes horizontales para separar los botones */
+    margin-right: 10px; /* Ajusta según sea necesario */
+  }
+  
+  .button-container:last-child {
+    margin-right: 0; /* Elimina el margen derecho del último botón */
+  }
+  
+  .button-container:hover {
+    background-color: #d93232;
+  }
   
