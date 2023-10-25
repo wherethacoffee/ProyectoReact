@@ -28,10 +28,10 @@ body {
 
 .form-group {
   margin-bottom: 20px;
-  text-align: left;
+  text-align: center;
 }
 
-.input-field {
+.input-field-login {
   width: calc(100% - 20px);
   padding: 10px;
   border: 1px solid #ffffff;
@@ -44,7 +44,10 @@ body {
 
 /* Estilos para el captcha */
 .g-recaptcha {
+  margin: 0 auto;
   margin-top: 10px;
+  text-align: center; /* Centra el contenido del captcha */
+  max-width: 304px; /* Establece un ancho máximo para el captcha */
 }
 
 .login-button,
@@ -73,13 +76,58 @@ body {
 }
 
 .g-recaptcha {
-  z-index: 9999; /* Establece un z-index alto para el contenedor de ReCAPTCHA */.login-button {
+  z-index: 9999; /* Establece un z-index alto para el contenedor de ReCAPTCHA */
+  .login-button {
     margin-top: 20px; /* Ajusta el margen superior del botón de iniciar sesión */
-}
-
+  }
 }
 
 .error-message {
   color: red; /* Establece el color del texto de error a rojo */
   margin-top: 10px;
+}
+
+/* Media query para pantallas de hasta 600px de ancho */
+@media (max-width: 600px) {
+  .login-box {
+    width: 90%; /* Ajusta el ancho del cuadro de login para pantallas pequeñas */
+  }
+
+  .input-field-login,
+  .login-button,
+  .create-account-button {
+    font-size: 12px; /* Ajusta el tamaño de fuente de los campos y botones para pantallas pequeñas */
+  }
+
+  /* Otras reglas CSS específicas para pantallas pequeñas */
+}
+
+/* Media query para pantallas de 601px a 1024px de ancho */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .login-box {
+    width: 70%; /* Ajusta el ancho del cuadro de login para pantallas medianas */
+  }
+
+  .input-field-login,
+  .login-button,
+  .create-account-button {
+    font-size: 14px; /* Ajusta el tamaño de fuente de los campos y botones para pantallas medianas */
+  }
+
+  /* Otras reglas CSS específicas para pantallas medianas */
+}
+
+/* Media query para pantallas de 1025px de ancho en adelante */
+@media (min-width: 1025px) {
+  .login-box {
+    width: 50%; /* Ajusta el ancho del cuadro de login para pantallas grandes */
+  }
+
+  .input-field-login,
+  .login-button,
+  .create-account-button {
+    font-size: 16px; /* Ajusta el tamaño de fuente de los campos y botones para pantallas grandes */
+  }
+
+  /* Otras reglas CSS específicas para pantallas grandes */
 }

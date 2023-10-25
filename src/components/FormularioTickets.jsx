@@ -409,12 +409,14 @@ const RegistroTickets = () => {
           ))}
         </select>
         {errors.asunto && <span>{errors.asunto.message}</span>}
-        <button type="submit" className="btn-submit-ticket">
-          Generar Turno
-        </button>
-        <button onClick={update} className="btn-update-ticket">
-          Actualizar Turno
-        </button>
+        <div className="buttons-container">
+          <button type="submit" className="btn-submit-ticket">
+            Generar Turno
+          </button>
+          <button onClick={update} className="btn-update-ticket">
+            Actualizar Turno
+          </button>
+        </div>
       </form>
     </div>
   );

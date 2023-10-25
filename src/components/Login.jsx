@@ -58,17 +58,17 @@ const Login = ({ onLogin }) => {
               name="username"
               required
               placeholder="Ejemplo: usuario123"
-              className="input-field"
+              className="input-field-login"
             />
           </div>
-          <div className="form-group">
+          <div className="form-group-pass">
             <label htmlFor="password">Contraseña:</label>
             <input
               type="password"
               id="password"
               name="password"
               required
-              className="input-field"
+              className="input-field-login"
             />
           </div>
           <div className="form-group">

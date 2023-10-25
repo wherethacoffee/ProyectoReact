@@ -37,7 +37,7 @@ body {
   font-size: 24px;
 }
 
-.small-button{
+.small-button {
   background-color: #ff4646;
   color: #ffffff;
   border: none;
@@ -108,4 +108,55 @@ body {
   display: flex;
   flex-direction: column; /* Esto hará que los elementos se muestren en una columna en lugar de una fila */
   align-items: center; /* Esto centrará los elementos horizontalmente en el contenedor */
+}
+
+/* Media query para pantallas de hasta 600px de ancho */
+@media (max-width: 600px) {
+  .header {
+    /* Estilos específicos para la cabecera en pantallas pequeñas */
+    padding: 10px;
+  }
+
+  .small-button,
+  .large-button {
+    /* Estilos específicos para los botones en pantallas pequeñas */
+    font-size: 18px;
+    padding: 14px 25px;
+  }
+
+  /* Otras reglas CSS específicas para pantallas pequeñas */
+}
+
+/* Media query para pantallas de 601px a 1024px de ancho */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .header {
+    /* Estilos específicos para la cabecera en pantallas medianas */
+    padding: 15px;
+  }
+
+  .small-button,
+  .large-button {
+    /* Estilos específicos para los botones en pantallas medianas */
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+
+  /* Otras reglas CSS específicas para pantallas medianas */
+}
+
+/* Media query para pantallas de 1025px de ancho en adelante */
+@media (min-width: 1025px) {
+  .header {
+    /* Estilos específicos para la cabecera en pantallas grandes */
+    padding: 20px;
+  }
+
+  .small-button,
+  .large-button {
+    /* Estilos específicos para los botones en pantallas grandes */
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  /* Otras reglas CSS específicas para pantallas grandes */
 }
