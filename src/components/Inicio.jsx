@@ -2,8 +2,19 @@ import React from 'react';
 import logo from '../images/logo.jpg';
 import '../styles/InicioStyle.css';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import Modal from './Modal';
+import { useState } from 'react';
 
 const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
+  const [cookies, setCookie] = useCookies(['cookieName']);
+  const [showModal, setShowModal] = useState(!cookies.cookieName);
+
+  const handleCloseModal = () => {
+    setCookie('cookieName', true, { path: '/' });
+    setShowModal(false);
+  };
+
   return (
     <div className="inicio-container">
       <header className="header">
@@ -49,7 +60,7 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
                  Dashboard
           </Link>
           )}
-
+           {showModal && <Modal onClose={handleCloseModal} />}
         </div>
       </div>
     </div>
