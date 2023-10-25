@@ -56,15 +56,9 @@ function App() {
         />
         <Route
           path = "/crear-ticket"
-          element ={
-            <ProtectedRoute 
               element={
                 <RegistroTickets isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
               }
-              isLoggedIn={isLoggedIn}
-              isAdmin={isAdmin}
-            />
-          }
         />
         <Route
           path = "/crear-cuenta"
@@ -128,15 +122,9 @@ function App() {
         />
         <Route
           path = "/alumno"
-          element ={
-            <ProtectedRoute 
-              element={
+              element={ 
                 <Alumno isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
               }
-              isLoggedIn={isLoggedIn}
-              isAdmin={isAdmin}
-            />
-          }
         />
       </Routes>
     </Router>
