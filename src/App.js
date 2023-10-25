@@ -8,8 +8,9 @@ import CrearUsuario from './components/CrearUsuario';
 import TurnoAdminComponent  from './components/TurnosAdmin'
 import Dashboards from './components/Dashboard';
 import Dashboard_total from './components/Dashboard_total';
-import CrudComponent from './components/CrudCatalogos';
-import Alumno from './components/Alumno';
+import CrudComponent from './components/CrudCatalogos'
+import ProtectedRoute from './components/ProtectedRoute';
+import Alumno from './components/Alumno'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,8 +24,6 @@ function App() {
 
     const response = loginAdmin({ username, password });
 
-    // Lógica de autenticación aquí, actualiza isLoggedIn y isAdmin según la autenticación
-    // Simulación: Si las credenciales son correctas y el usuario es administrador
     if (response.status = "200") {
       setIsLoggedIn(true);
       setIsAdmin(true);
@@ -57,33 +56,88 @@ function App() {
         />
         <Route
           path = "/crear-ticket"
-          element ={<RegistroTickets isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+          element ={
+            <ProtectedRoute 
+              element={
+                <RegistroTickets isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
         />
         <Route
           path = "/crear-cuenta"
-          element ={<CrearUsuario isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+          element ={
+            <ProtectedRoute
+              element={
+                <CrearUsuario isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
         />
         <Route
           path = "/tickets-admin"
-          element ={<TurnoAdminComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+          element ={
+            <ProtectedRoute 
+              element={
+                <TurnoAdminComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
         />
         <Route
           path = "/dashboard"
-          element ={<Dashboards isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+          element ={
+            <ProtectedRoute 
+              element={
+                <Dashboards isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
         />
         <Route
           path = "/dashboard-total"
-          element ={<Dashboard_total isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+          element ={
+            <ProtectedRoute 
+              element={
+                <Dashboard_total isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
         />
         <Route
           path = "/crud-catalogos"
-          element ={<CrudComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+          element ={
+            <ProtectedRoute 
+              element={
+                <CrudComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
         />
         <Route
           path = "/alumno"
-          element ={<Alumno isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+          element ={
+            <ProtectedRoute 
+              element={
+                <Alumno isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
+              }
+              isLoggedIn={isLoggedIn}
+              isAdmin={isAdmin}
+            />
+          }
         />
-        {/* Otras rutas */}
       </Routes>
     </Router>
   );
