@@ -39,7 +39,7 @@ export const registerTurno = data => fetch(`${API}/agregar`, {
   });
   
   // Actualizar un turno por ID
-  export const updateTurno = (curp, data) => fetch(`${API}/actualizar/${curp}`, {
+  export const updateTurno = (id, curp, data) => fetch(`${API}/actualizar/${id}/${curp}`, {
     method: "PUT",
     body: JSON.stringify({
       "idRep": data.idRep,  // Asegúrate de que estás utilizando el ID del representante
