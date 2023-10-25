@@ -9,6 +9,8 @@ import { useState, useEffect } from 'react';
 import { listAsunto, findAsunto } from '../services/asunto.services';
 import { listRepresentante } from '../services/representante.services';
 import { listAlumno } from '../services/alumno.services';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const RegistroTickets = () => {
@@ -18,6 +20,7 @@ const RegistroTickets = () => {
     const [niveles, setNiveles] = useState([]);
     const [municipios, setMunicipios] = useState([]);
     const [asuntos, setAsuntos] = useState([]);
+    const navigate = useNavigate();
 
     // Resto del código...
     useEffect(() => {
@@ -187,8 +190,9 @@ const RegistroTickets = () => {
                         <p><strong>Apellidos:</strong> ${curpAlumno.paterno} ${curpAlumno.materno}</p>
 
                       
-                    `,
+                    `,    
             });
+            navigate('/');
         } catch (error) {
             console.error('Error al registrar el turno', error);
             Swal.fire({
