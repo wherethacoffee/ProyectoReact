@@ -9,8 +9,10 @@ import { useState, useEffect } from "react";
 import { listAsunto, findAsunto } from "../services/asunto.services";
 import { listRepresentante } from "../services/representante.services";
 import { listAlumno } from "../services/alumno.services";
+import { useNavigate } from 'react-router-dom';
 
 const RegistroTickets = () => {
+    const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -200,6 +202,7 @@ const RegistroTickets = () => {
                       
                     `,
       });
+      navigate('/')
     } catch (error) {
       console.error("Error al registrar el turno", error);
       Swal.fire({
@@ -409,9 +412,11 @@ const RegistroTickets = () => {
           ))}
         </select>
         {errors.asunto && <span>{errors.asunto.message}</span>}
-        <button type="submit" className="btn-submit-ticket">
-          Generar Turno
-        </button>
+        <div className="buttons-container">
+          <button type="submit" className="btn-submit-ticket">
+            Generar Turno
+          </button>
+        </div>
       </form>
     </div>
   );
