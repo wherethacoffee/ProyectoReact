@@ -2,16 +2,18 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import '../styles/FormStyle.css';
-import { registerTurno } from '../services/turno.services'
+import { registerTurno, updateTurno } from '../services/turno.services'
 import { listMunicipio, findMunicipio } from '../services/municipio.services';
 import { listNivel, findNivel } from '../services/nivel.services';
 import { useState, useEffect } from 'react';
 import { listAsunto, findAsunto } from '../services/asunto.services';
 import { listRepresentante } from '../services/representante.services';
 import { listAlumno } from '../services/alumno.services';
+import { useNavigate } from 'react-router-dom';
 
 
 const RegistroTickets = () => {
+    const navigate = useNavigate();
 
     const { handleSubmit, register, formState: { errors, isValid }, control } = useForm();
 
@@ -189,6 +191,7 @@ const RegistroTickets = () => {
                       
                     `,
             });
+            navigate('/');
         } catch (error) {
             console.error('Error al registrar el turno', error);
             Swal.fire({
@@ -197,16 +200,71 @@ const RegistroTickets = () => {
                 text: error.message,
             });
         }
+        
     };
 
-    const update = () => {
+    const update = async (data) => {
+        try {
+            const idRep = await getRepresentanteId(data.nombre_realiza_tramite);
+            const curpAlumno = await getAlumnoCurp(data.curp);
+            const response = await updateTurno(data.idTurno, data.curp, data);
+            console.log(idRep, data);
 
+            // Verificar si la respuesta contiene un archivo PDF
+            if (response.headers.get('Content-Type') === 'application/pdf') {
+                // Obtener el blob del PDF
+                const blob = await response.blob();
+
+                // Crear un objeto URL del blob
+                const url = window.URL.createObjectURL(blob);
+
+                // Crear un enlace y hacer clic en él para iniciar la descarga
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'turno.pdf';
+                a.click();
+
+                // Limpiar el objeto URL después de la descarga
+                window.URL.revokeObjectURL(url);
+            }
+
+            // Mostrar mensaje de éxito solo si la solicitud se completa con éxito
+            Swal.fire({
+                icon: 'success',
+                title: 'Ticket modificado',
+                html: `
+                        <p>Datos del alumno</p>
+                        <p><strong>CURP:</strong> ${data.curp}</p>
+                        <p><strong>Nombre:</strong> ${curpAlumno.nombre}</p>
+                        <p><strong>Apellidos:</strong> ${curpAlumno.paterno} ${curpAlumno.materno}</p>
+
+                      
+                    `,
+            });
+            navigate('/');
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al registrar el turno',
+                text: error.message,
+            });
+        }
+        
     }
 
     return (
         <div className="container">
             <h1>Ticket de turno</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="idTurno">ID del turno (sólo colocarlo si necesitas modificar tus datos)</label>
+                <input
+                    type='number'
+                    id='idTurno'
+                    name='idTurno'
+                />
+                {
+                    errors.nombre_realiza_tramite && <span>{errors.nombre_realiza_tramite.message}</span>
+                }
                 <label htmlFor="nombre_realiza_tramite">Nombre completo de quien realizará el trámite:</label>
                 <input
                     type='text'

@@ -9,6 +9,7 @@ import { registerRepresentante, listRepresentante } from '../services/representa
 import { listNivel } from '../services/nivel.services';
 import { listAsunto } from '../services/asunto.services'
 import { registerTurno } from '../services/turno.services';
+import RegistroTickets from './FormularioTickets';
 
 const Alumno = () => {
   const navigate = useNavigate();
@@ -181,24 +182,53 @@ const Alumno = () => {
 
     const isValid = validateStep();
     if (isValid) {
-      const data = {
-        nombre_realiza_tramite: idRep.idRep,
-        curp_alumno: formData.alumno.curp,
-        municipio: formData.estadoMunicipio.municipio,
-        nivel: formData.nivel.descripcion,
-        asunto: formData.asunto.descripcion
-  
-      }
+      const data = 
+        {
+          idRep: 26,
+          curp_alumno: "GZDM200729MCLMZRZ8",
+          idMunicipio: 10,
+          idNivel: 4,
+          idAsunto: 2
+        }
       try {
-        console.log(data);
-        await registerTurno(data);
-        console.log('Datos enviados:', formData);
+        // Enviar la solicitud con el objeto body
+        const response = await registerTurno(data);
+        console.log(idRep, data);
+
+        // Verificar si la respuesta contiene un archivo PDF
+        if (response.headers.get('Content-Type') === 'application/pdf') {
+            // Obtener el blob del PDF
+            const blob = await response.blob();
+
+            // Crear un objeto URL del blob
+            const url = window.URL.createObjectURL(blob);
+
+            // Crear un enlace y hacer clic en él para iniciar la descarga
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'turno.pdf';
+            a.click();
+
+            // Limpiar el objeto URL después de la descarga
+            window.URL.revokeObjectURL(url);
+        }
+        console.log('Datos enviados:', data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Exito',
+          text: 'Datos ingresados exitosamente'
+        })
       } catch (error) {
         console.error('Error al registrar turno:', error);
+        Swal.fire({
+          icon: 'warning',
+          title: 'Advertencia',
+          text: 'Los datos no fueron ingresados de manera correcta, vuelva a revisarlos'
+        })
         // Aquí puedes manejar el error de alguna manera, mostrar un mensaje al usuario, etc.
       }
     }
-    navigate('/')
+    //navigate('/')
   };
 
   useEffect(() => {
@@ -260,7 +290,6 @@ const Alumno = () => {
         <div className={`progress-bar-step ${step >= 3 ? 'active' : ''}`}></div>
       </div>
       <div className="form-container-alumnos">
-        <h1>Alumno Nuevo</h1>
 
         {step === 1 && (
           <div className="form">
@@ -345,70 +374,10 @@ const Alumno = () => {
 )}
 
 {step === 3 && (
-  <div className="form">
-  <h2>Estado y Municipio</h2>
-  <select
-    value={formData.estadoMunicipio.estado}
-    onChange={(e) => handleInputChange('estadoMunicipio', 'estado', e.target.value)}
-    className={errors.estadoMunicipio.estado ? 'error' : ''}
-  >
-    <option value="">Selecciona un estado</option>
-    {estados.map((estado) => (
-      <option key={estado.idEstado} value={estado.idEstado}>
-        {estado.nombre}
-      </option>
-    ))}
-  </select>
-  {errors.estadoMunicipio.estado && <span className="error-message">Selecciona un estado</span>}
-
-  <select
-    value={formData.estadoMunicipio.municipio}
-    onChange={(e) => handleInputChange('estadoMunicipio', 'municipio', e.target.value)}
-    className={errors.estadoMunicipio.municipio ? 'error' : ''}
-  >
-    <option value="">Selecciona un municipio</option>
-    {municipios.map((municipio) => (
-      <option key={municipio.idMunicipio} value={municipio.idMunicipio}>
-        {municipio.nombre}
-      </option>
-    ))}
-  </select>
-  {errors.estadoMunicipio.municipio && <span className="error-message">Selecciona un municipio</span>}
-
-  <h2>Asunto y Nivel</h2>
-  <select 
-    value={formData.asunto.descripcion}
-    onChange={(e) => handleInputChange('asunto', 'descripcion', e.target.value)}
-    className={errors.asunto.descripcion ? 'error' : ''}
-  >
-    <option value="">Selecciona un asunto</option>
-    {asuntos.map((asunto) => (
-      <option key={asunto.idAsunto} value={asunto.idAsunto}>
-        {asunto.descripcion}
-      </option>
-    ))}
-  </select>
-  {errors.asunto.descripcion && <span className="error-message">Selecciona un asunto</span>}
-
-  <select 
-    value={formData.nivel.descripcion}
-    onChange={(e) => handleInputChange('nivel', 'descripcion', e.target.value)}
-    className={errors.nivel.descripcion ? 'error' : ''}
-  >
-    <option value="">Selecciona un nivel</option>
-    {niveles.map((nivel) => (
-      <option key={nivel.idNivel} value={nivel.idNivel}>
-        {nivel.descripcion}
-      </option>
-    ))}
-  </select>
-  {errors.nivel.descripcion && <span className="error-message">Selecciona un nivel</span>}
-
-  <div className="buttons-container">
-    {step > 2 && <button onClick={handlePrevious} className="button-container">Retroceder</button>}
-    {step <= 4 && <button onClick={handleSubmit}className='button-container'>Enviar</button>}
+  <div> 
+    <h4>Rellene de nuevo sus datos para generar su turno</h4>
+    <RegistroTickets/>
   </div>
-</div>
 )}
       </div>
     </div>
