@@ -82,7 +82,7 @@
     background-color: #d93232;
   }
 
-  .form-container {
+  .form-container-crud {
     background-color: #303030;
     border-radius: 8px;
     padding: 20px;
@@ -94,9 +94,9 @@
     color: #ffffff;
   }
   
-  .form-container input[type="text"],
-  .form-container input[type="email"],
-  .form-container input[type="password"],
+  .form-container-crud  input[type="text"],
+  .form-container-crud  input[type="email"],
+  .form-container-crud input[type="password"],
   .form-container select {
     width: 100%;
     padding: 10px;

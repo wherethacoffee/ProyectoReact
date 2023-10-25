@@ -175,8 +175,9 @@ const TurnoAdminComponent = () => {
 
 
   return (
-    <div className="container" id="turno-container">
+    <div className="container-tickets" id="turno-container">
       {/* Componente para la búsqueda por CURP o nombre */}
+      <div className="main-content">
       <div className="search-container">
         <input
           type="text"
@@ -326,12 +327,14 @@ const TurnoAdminComponent = () => {
             )}
 
 
-
+</div>
             {/* Formulario para registrar un nuevo turno */}
-            <div>
+            <div className="form-container">
+                <div>
                 <h2>Registrar Nuevo Turno</h2>
-                {/* Implementa el formulario para recopilar la información del nuevo turno */}
-                {/* y llama a la función handleRegister al hacer clic en un botón */}
+                </div>
+                 {/* Implementa el formulario para recopilar la información del nuevo turno */}
+                    {/* y llama a la función handleRegister al hacer clic en un botón */}
                 <RegistroTickets></RegistroTickets>
             </div>
         </div>

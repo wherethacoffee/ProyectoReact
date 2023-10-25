@@ -68,7 +68,7 @@ const CrudComponent = () => {
         <button onClick={() => handleButtonClick('admin')}>Admin</button>
       </div>
       {selectedForm && (
-        <form className="form-container" onSubmit={handleFormSubmit}>
+        <form className="form-container-crud" onSubmit={handleFormSubmit}>
           {selectedForm === 'alumno' && (
             <>
               <label htmlFor="curp">CURP:</label>
@@ -112,7 +112,7 @@ const CrudComponent = () => {
             </>
           )}
         {selectedForm === 'representante' && (
-        <div className="form-container">
+        <div className="form-container-crud">
           <label htmlFor="id">ID:</label>
           <input type="text" id="id" name="id" />
 
@@ -137,7 +137,7 @@ const CrudComponent = () => {
       )}
 
       {selectedForm === 'asunto' && (
-        <div className="form-container">
+        <div className="form-container-crud">
           <label htmlFor="id">ID:</label>
           <input type="text" id="id" name="id" />
           <label htmlFor="descripcion">Descripción:</label>
@@ -152,7 +152,7 @@ const CrudComponent = () => {
       )}
 
       {selectedForm === 'nivel' && (
-        <div className="form-container">
+        <div className="form-container-crud">
           <label htmlFor="id">ID:</label>
           <input type="text" id="id" name="id" />
           <label htmlFor="descripcion">Descripción:</label>
@@ -167,7 +167,7 @@ const CrudComponent = () => {
       )}
 
       {selectedForm === 'estado' && (
-        <div className="form-container">
+        <div className="form-container-crud">
           <label htmlFor="id">ID:</label>
           <input type="text" id="id" name="id" />
           <label htmlFor="nombre">Nombre:</label>
@@ -183,7 +183,7 @@ const CrudComponent = () => {
       )}
 
       {selectedForm === 'municipio' && (
-        <div className="form-container">
+        <div className="form-container-crud">
           <label htmlFor="id">ID:</label>
           <input type="text" id="id" name="id" />
           <label htmlFor="nombre">Nombre:</label>
@@ -203,12 +203,11 @@ const CrudComponent = () => {
       )}
 
       {selectedForm === 'admin' && (
-        <div className="form-container">
+        <div className="form-container-crud">
           <label htmlFor="id">ID:</label>
           <input type="text" id="id" name="id" />
           <label htmlFor="username">Username:</label>
           <input type="text" id="username" name="username" />
-
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" />
 
