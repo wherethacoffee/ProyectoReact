@@ -3,7 +3,7 @@ import { Route, Navigate } from 'react-router-dom'
 
 
 const ProtectedRoute = ({ element, isLoggedIn, isAdmin }) => {
-    if (isLoggedIn) {
+    if (isLoggedIn && isAdmin) {
         return element;
     } else {
         return <Navigate to="/iniciar-sesion" />;
