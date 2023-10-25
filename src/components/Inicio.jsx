@@ -46,6 +46,11 @@ const Inicio = ({ isLoggedIn, isAdmin, onLogout }) => {
                  Modificar Catalogos
           </Link>
           )}
+          {isLoggedIn && isAdmin && (
+          <Link to="/listar" className="large-button">
+                 Listar
+          </Link>
+          )}
         </div>
       </div>
     </div>
