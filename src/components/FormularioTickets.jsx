@@ -409,11 +409,9 @@ const RegistroTickets = () => {
           ))}
         </select>
         {errors.asunto && <span>{errors.asunto.message}</span>}
-        <div className="buttons-container">
-          <button type="submit" className="btn-submit-ticket">
-            Generar Turno
-          </button>
-        </div>
+        <button type="submit" className="btn-submit-ticket">
+          Generar Turno
+        </button>
       </form>
     </div>
   );
