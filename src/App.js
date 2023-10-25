@@ -56,15 +56,11 @@ function App() {
         />
         <Route
           path = "/crear-ticket"
-          element ={
-            <ProtectedRoute 
-              element={
-                <RegistroTickets isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
-              }
-              isLoggedIn={isLoggedIn}
-              isAdmin={isAdmin}
-            />
-          }
+          element ={<RegistroTickets isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
+        />
+        <Route
+          path = "/alumno"
+          element ={<Alumno isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />}
         />
         <Route
           path = "/crear-cuenta"
@@ -120,18 +116,6 @@ function App() {
             <ProtectedRoute 
               element={
                 <CrudComponent isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
-              }
-              isLoggedIn={isLoggedIn}
-              isAdmin={isAdmin}
-            />
-          }
-        />
-        <Route
-          path = "/alumno"
-          element ={
-            <ProtectedRoute 
-              element={
-                <Alumno isLoggedIn={isLoggedIn} isAdmin={isAdmin} onLogout={handleLogout} />
               }
               isLoggedIn={isLoggedIn}
               isAdmin={isAdmin}

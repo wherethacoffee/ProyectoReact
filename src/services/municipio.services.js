@@ -25,6 +25,14 @@ export const registerMunicipio = data => fetch(`${API}/agregar`, {
       "Content-Type": "application/json"
     }
   });
+
+  //Listar municipios por Estado
+  export const listMunicipiosByIdEstado = (idEstado) => fetch(`${API}/listarPorEstado/${idEstado}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
   
   // Actualizar un municipio por ID
   export const updateMunicipio = (idMunicipio, data) => fetch(`${API}/actualizar/${idMunicipio}`, {
